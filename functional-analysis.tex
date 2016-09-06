@@ -52,6 +52,7 @@
 \newcommand\lparagraph[1]{\paragraph{#1}\mbox{}\\}
 \newcommand{\pd}[2]{\frac{\partial #1}{\partial #2}}
 \newcommand{\uto}{\rightrightarrows}
+\newcommand{\underto}[1]{\xrightarrow[#1]{}}
 \DeclareMathOperator{\Ree}{Re}
 \DeclareMathOperator{\Img}{Im}
 \DeclareMathOperator{\Arg}{Arg}
@@ -70,70 +71,75 @@
 \section{Линейное нормированное пространство}
 
 \begin{definition}
-	Линейное множество $L$ над полем скаляров $\real$ ($\complex$) — множество с
-	операциями сложения и умножения на скаляр, удовлетворяющее свойствам:
-	\begin{enumerate}
-		\item $(x + y) + z = x + (y + z)$ $\forall x,y,z \in L$
-		\item $x + y = y + x$ $\forall x,y,z \in L$
-		\item Существует элемент $0$ такой, что $x + 0 = x$ $\forall x \in L$
-		\item Для любого $x \in L$ существует обратный элемент по сложению $-x$ такой, что
-		$-x + x = 0$
-		\item $\lambda(\mu x) = (\lambda \mu) x$ $\forall \lambda, \mu$ — скаляров,
-		$x \in L$
-		\item $\lambda(x + y) = \lambda x + \lambda y$
-		\item $(\lambda + \mu)x = \lambda x + \lambda y$
-	\end{enumerate}
+    Линейное множество $L$ над полем скаляров $\real$ ($\complex$) — множество с
+    операциями сложения и умножения на скаляр, удовлетворяющее свойствам:
+    \begin{enumerate}
+        \item $(x + y) + z = x + (y + z)$ $\forall x,y,z \in L$
+        \item $x + y = y + x$ $\forall x,y,z \in L$
+        \item Существует элемент $0$ такой, что $x + 0 = x$ $\forall x \in L$
+        \item Для любого $x \in L$ существует обратный элемент по сложению $-x$ такой, что
+        $-x + x = 0$
+        \item $\lambda(\mu x) = (\lambda \mu) x$ $\forall \lambda, \mu
+        \in \real(\complex)$, $x \in L$
+        \item $\lambda(x + y) = \lambda x + \lambda y$ $\forall \lambda \in 
+        \real(\complex)$, $x,y \in L$
+        \item $(\lambda + \mu)x = \lambda x + \mu y$ $\forall \lambda,
+        \mu \in \real(\complex)$, $x,y \in L$
+    \end{enumerate}
 \end{definition}
 
 \begin{definition}
-	$\varphi: L \to \real$ называется нормой, если:
-	\begin{enumerate}
-		\item $\varphi(x + y) \leqslant \varphi(x) \varphi(y)$
-		\item $\varphi(\lambda x) = |\lambda|\varphi(x)$
-		\item $\varphi(x) \geqslant 0$
-		\item $\varphi (x) = 0 \iff x = 0$
-	\end{enumerate}
-	
-	Если выполнены только первых три свойства, то $\varphi$ называется полунормой.
+    $\varphi: L \to \real$ называется нормой, если:
+    \begin{enumerate}
+        \item $\varphi(x + y) \leqslant \varphi(x) + \varphi(y)$
+        $\forall x, y \in L$
+        \item $\varphi(\lambda x) = |\lambda|\varphi(x)$
+        $\forall x \in L$, $\lambda \in \real(\complex)$
+        \item $\varphi(x) \geqslant 0$ $\forall x \in L$
+        \item $\varphi (x) = 0 \iff x = 0$
+    \end{enumerate}
+
+    Если выполнены только первых три свойства, то $\varphi$ называется полунормой.
 \end{definition}
 \begin{remark}
-	\begin{enumerate}
-		\item $\rho (x, y) = \varphi(x - y)$ — метрика
-		\item Если на пространстве задана норма $\|\cdot\|$, то $X = (L, \varphi)$ — 
-		нормированное пространство.
-	\end{enumerate}
+\mbox{}
+    \begin{enumerate}
+        \item $\rho (x, y) = \varphi(x - y)$ — метрика
+        \item Если на пространстве задана норма $\|\cdot\|$, то $X = (L, \varphi)$ —
+        нормированное пространство.
+    \end{enumerate}
 \end{remark}
 
 \begin{definition}
-	$x_n \to x$ в $X$, если $\|x_n - x\| \to 0$ при $n \to \infty$, то есть $\forall 
-	\varepsilon > 0 \exists N:$~$\forall n > N$ $\|x_n - x\| < \varepsilon$
+    $x_n \to x$ в $X$, если $\|x_n - x\| \to 0$ при $n \to \infty$, то есть $\forall
+    \varepsilon > 0$ $\exists N$:~$\forall n > N$ $\|x_n - x\| < \varepsilon$
 \end{definition}
 
 \begin{definition}
-	$\{x_n\} \subset X$ — фундаментальная последовательность (сходящаяся в себе, 
-	последовательность Коши), если $\|x_n - x_m\| \to 0$ при $m,n \to \infty$, то есть
-	$\forall \varepsilon > 0 \exists N:$ $\forall m,n > N$ $\|x_m - x_m\| < \varepsilon$
+    $\{x_n\} \subset X$ — фундаментальная последовательность (сходящаяся в себе,
+    последовательность Коши), если $\|x_n - x_m\| \underto{m,n \to \infty} 0$, то есть
+    $\forall \varepsilon > 0 \exists N:$ $\forall m,n > N$ $\|x_m - x_m\| < \varepsilon$
 \end{definition}
 
 \begin{remark}
-	$x_n \to x \implies \{x_n\}$ — фундаментальная. Обратное, вообще говоря, неверно.
+    $x_n \to x \implies \{x_n\}$ — фундаментальная. Обратное, вообще говоря, неверно.
 \end{remark}
 \begin{definition}
-	Нормированное пространство $X$ называется полным, если из фундаментальности 
-	последовательности следует существование предела.
+    Нормированное пространство $X$ называется полным, если из фундаментальности
+    последовательности следует существование предела.
 \end{definition}
 
 \begin{definition}
-	Пусть $x_n \in X$. $\sum\limits_{j = 1}^\infty x_j$ сходится, если
-	$S_n = \sum\limits_{j = 1}^n x_j$ имеет предел $\lim S_n = S$. $S$ называется
-	суммой ряда.
+    Пусть $x_n \in X$. $\sum\limits_{j = 1}^\infty x_j$ сходится, если
+    $S_n = \sum\limits_{j = 1}^n x_j$ имеет предел $\lim S_n = S$. $S$ называется
+    суммой ряда.
 \end{definition}
 
 \begin{definition}
-	Ряд сходится абсолютно, если $\sum\limits_{j = 1}^\infty \|x\|$ сходится.
+    Ряд сходится абсолютно, если $\sum\limits_{j = 1}^\infty \|x\|$ сходится.
 \end{definition}
 \begin{remark}
-	Из абсолютной сходимости не следует обычная сходимость.
+    Из абсолютной сходимости не следует обычная сходимость.
 \end{remark}
 
 $S_n$ сходится $\iff |S_n - S_m| \to 0$. Пусть $C_n = \sum\limits_{j = 1}^n \|x\|$.
@@ -142,102 +148,104 @@ $C_n$ сходится $\iff |C_n - C_m|~\to~0$.
 $\|S_n - S_m\| \to 0$, то нам нужна полнота пространства.
 
 \begin{definition}
-	Полное линейное нормированное пространство называется банаховым пространством (в честь 
-	польского математика Стефана Банаха).
+    Полное линейное нормированное пространство называется банаховым пространством (в честь
+    польского математика Стефана Банаха).
 \end{definition}
 \begin{examples}
-	\begin{itemize}
-		\item Евклидово пространство: $\real^n$ с нормой
-		$\|x\| = |x| = \sqrt[n]{|x_1|^2 + \ldots + |x_n|^2}$ — то же, что
-		$\ell_n^2$ с нормой $\|\cdot \|_2$
-		\item $\ell_n^1 = (\real^n, \|\cdot\|_1)$, где $\|x\|_1 = |x_1| + \ldots + |x_n|$
-		\item $\ell_n^\infty = (\real^n, \|\cdot\|_\infty)$,
-		где $\|x\|_\infty = \max\limits_{1 \leqslant j \leqslant n} |x_j|$
-		\item $\ell_n^p = (\real(\complex), \|\cdot\|_p$,
-		$\|x\|_p = (\sum_{j=1}^n |x_j|^p)^{\frac{1}{p}}$, $p \geqslant 1$
-		\item Пусть $\Omega$ — область в $\real^m$, т. е. ограниченное открытое множество.
-		$\overline\Omega$ — замыкание $\Omega$. Ясно, что $\overline \Omega$ — компакт в
-		$\real^m$. Рассмотрим пространство $C(\overline \Omega)$ с нормой
-		$\|x\| = \max_{t \in \overline \Omega} |x(t)|$
-	\end{itemize}
+\mbox{}
+    \begin{itemize}
+        \item Евклидово пространство: $\real^n$ с нормой
+        $\|x\| = |x| = \sqrt[n]{|x_1|^2 + \ldots + |x_n|^2}$ — то же, что
+        $\ell_n^2$ с нормой $\|\cdot \|_2$;
+        \item $\ell_n^1 = (\real^n, \|\cdot\|_1)$, где
+        $\|x\|_1 = |x_1| + \ldots + |x_n|$;
+        \item $\ell_n^\infty = (\real^n, \|\cdot\|_\infty)$,
+        где $\|x\|_\infty = \max\limits_{1 \leqslant j \leqslant n} |x_j|$;
+        \item $\ell_n^p = (\real(\complex), \|\cdot\|_p$,
+        $\|x\|_p = (\sum_{j=1}^n |x_j|^p)^{\frac{1}{p}}$, $p \geqslant 1$;
+        \item $C(\overline \Omega)$ с нормой
+        $\|x\| = \max\limits_{t \in \overline \Omega} |x(t)|$, где $\Omega$ — область в $\real^m$. $\overline\Omega$ — замыкание $\Omega$. Ясно, что $\overline \Omega$ — компакт в
+        $\real^m$.
+    \end{itemize}
 \end{examples}
 \begin{exercise}
-	Верно ли, что $\|x\|_p \to \|x\|_\infty$ при $p \to \infty$?
+    Верно ли, что $\|x\|_p \underto{p \to \infty} \|x\|_\infty$?
 \end{exercise}
 
 \begin{theorem}
-	Пространство $C(\overline \Omega)$ полно.
+    Пространство $C(\overline \Omega)$ полно.
 \end{theorem}
 \begin{proof}
-	Рассмотрим фундаментальную последовательность $x_n \in C(\overline \Omega)$.
-	$$
-	\forall \varepsilon > 0 \exists N: \forall k, n > N \|x_k - x_n\| =
-	\max_{t \in \overline \Omega} |x_n(t) - x_k(t)| < \varepsilon
-	$$
-	
-	Возьмём $t \in \overline \Omega$. $\{x_n(t)\}$ — числовая последовательность.
-	Тогда получаем $|x_n(t) - x_k(t)| < \varepsilon$, отсюда $\{x_n(t)\}$ — 
-	фундаментальна, значит существует $\lim\limits_{n \to \infty} x_n(t) = x(t)$.
-	
-	Проверим, что $\max\limits_{t \in \overline \Omega} |x_n(t) - x(t)| \to 0$ при
-	$n \to \infty$, т. е. $x_n \uto x$ на $\overline \Omega$.
-	Заметим, что $\forall k, n > N |x_k(t) - x_n(t)| < \varepsilon \implies
-	|x(t) - x_n(t)| \leqslant \varepsilon$.
-	
-	Почему же $x$ непрерывна? Потому что равномерный предел непрерывных функций 
-	непрерывен.
+    Рассмотрим фундаментальную последовательность $x_n \in C(\overline \Omega)$.
+    $$
+    \forall \varepsilon > 0 \exists N: \forall k, n > N \|x_k - x_n\| =
+    \max_{t \in \overline \Omega} |x_n(t) - x_k(t)| < \varepsilon
+    $$
+
+    Возьмём $t \in \overline \Omega$. $\{x_n(t)\}$ — числовая последовательность.
+    Тогда получаем $|x_n(t) - x_k(t)| < \varepsilon$, отсюда $\{x_n(t)\}$ —
+    фундаментальна, значит существует $\lim\limits_{n \to \infty} x_n(t) = x(t)$.
+
+    Проверим, что $\max\limits_{t \in \overline \Omega} |x_n(t) - x(t)|
+    \underto{n \to \infty} 0$, т. е. $x_n \uto x$ на $\overline \Omega$.
+    Заметим, что $\forall k, n > N$ $|x_k(t) - x_n(t)| < \varepsilon \implies
+    |x(t) - x_n(t)| \leqslant \varepsilon$.
+
+    Почему же $x$ непрерывна? Потому что равномерный предел непрерывных функций
+    непрерывен.
 
 \end{proof}
 
-Пусть $[a, b] \subset \real$ Рассмотрим пространство дифференцируемых функций $C^1[a, b]$. 
+Пусть $[a, b] \subset \real$ Рассмотрим пространство дифференцируемых функций $C^1[a, b]$.
 Какую норму на нём выбрать?
 \begin{itemize}
-	\item $\varphi_1(x) = \max\limits_{t \in [a, b]} |x(t)|$
-	\item $\varphi_2(x) = \max\limits_{t \in [a, b]} |x'(t)|$
-	\item $\varphi_3(x) = \varphi_1(x) + \varphi_2(x)$
-	\item $\varphi_4(x) = |x(a)| + \max\limits_{t \in [a, b]} |x'(t)|$
+    \item $\varphi_1(x) = \max\limits_{t \in [a, b]} |x(t)|$;
+    \item $\varphi_2(x) = \max\limits_{t \in [a, b]} |x'(t)|$;
+    \item $\varphi_3(x) = \varphi_1(x) + \varphi_2(x)$;
+    \item $\varphi_4(x) = |x(a)| + \max\limits_{t \in [a, b]} |x'(t)|$.
 \end{itemize}
 
-Заметим, что $\varphi_2$ нормой вообще не является, а $\varphi_1$ не даёт полноты 
+Заметим, что $\varphi_2$ нормой вообще не является, а $\varphi_1$ не даёт полноты
 пространства.
-
+\pagebreak
 \begin{theorem}
-	\begin{enumerate}
-		\item Пространство $(C^1 [a, b], \varphi_1)$ не полно;
-		\item Пространство $(C^1 [a, b], \varphi_3)$ полно;
-	\end{enumerate}
+    \begin{enumerate}
+        \item Пространство $(C^1 [a, b], \varphi_1)$ не полно.
+        \item Пространство $(C^1 [a, b], \varphi_3)$ полно.
+    \end{enumerate}
 \end{theorem}
 
 \begin{proof}
-	Докажем первое утверждение.
-	
-	\emph{Первый аргумент}. $x$ — производная непрерывная на $[a, b]$, негладкая.
-		По теореме Вейерштрасса для любого $\varepsilon > 0$ существует многочлен
-		$P$ такой, что $\max\limits_{[a, b]} |P - x| < \varepsilon$
-	
-	\emph{Второй аргумент}. Пусть $[a, b] = [-1, 1]$, $x(t) = |t| \notin C^1[a, b]$,
-	$x^\varepsilon(t) = |t|^{1 + \varepsilon} \in C^1[a, b]$. $\max |x(t) - x^\varepsilon(t)| \to 0$ при $\varepsilon \to 0$.
-	
-	Для доказательства второго утверждения возьмём $x_n \in C^1[a, b]$ — 
-	последовательность, фундаментальную относительно $\varphi_3$.
-	$$
-	\varphi_3(x_n -x_k) \to 0\text{ при } n, k \to \infty \implies
-	\begin{cases}
-		\varphi_1(x_n - x_k) \to 0\\
-		\varphi_2(x_n - x_k) \to 0
-	\end{cases}
-	\implies \exists x \in C[a, b], y \in C[a, b]
-	$$
-	
-	$$
-	\begin{cases}
-		\varphi_1(x_n - x) \to 0 \iff x_n \uto x \text{ на } [a, b]\\
-		\varphi_1(x'_n - y) \to 0 \iff x'_n \uto y \text{ на } [a, b]
-	\end{cases}
-	\implies x \in C^1[a, b], x' = y
-	$$
-	
-	Отсюда $\varphi_3(x_n - x) \to 0$
+    Докажем первое утверждение.
+
+    \emph{Первый аргумент}. $x$ — производная непрерывная на $[a, b]$, негладкая.
+        По теореме Вейерштрасса для любого $\varepsilon > 0$ существует многочлен
+        $P$ такой, что $\max\limits_{[a, b]} |P - x| < \varepsilon$
+
+    \emph{Второй аргумент}. Пусть $[a, b] = [-1, 1]$, $x(t) = |t| \notin C^1[a, b]$,
+    $x^\varepsilon(t) = |t|^{1 + \varepsilon} \in C^1[a, b]$. $\max |x(t) - x^\varepsilon(t)| 
+    \underto{\varepsilon \to 0} 0$.
+
+    Для доказательства второго утверждения возьмём $x_n \in C^1[a, b]$ —
+    последовательность, фундаментальную относительно $\varphi_3$.
+    $$
+    \varphi_3(x_n -x_k) \underto{n, k \to \infty} 0 \implies
+    \begin{cases}
+        \varphi_1(x_n - x_k) \to 0\\
+        \varphi_2(x_n - x_k) \to 0
+    \end{cases}
+    \implies \exists x \in C[a, b], y \in C[a, b]
+    $$
+
+    $$
+    \begin{cases}
+        \varphi_1(x_n - x) \to 0 \iff x_n \uto x \text{ на } [a, b]\\
+        \varphi_1(x'_n - y) \to 0 \iff x'_n \uto y \text{ на } [a, b]
+    \end{cases}
+    \implies x \in C^1[a, b], x' = y
+    $$
+
+    Отсюда $\varphi_3(x_n - x) \to 0$
 \end{proof}
 
 \end{document}
