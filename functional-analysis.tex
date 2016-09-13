@@ -53,12 +53,15 @@
 \newcommand{\pd}[2]{\frac{\partial #1}{\partial #2}}
 \newcommand{\uto}{\rightrightarrows}
 \newcommand{\underto}[1]{\xrightarrow[#1]{}}
+\newcommand{\dif}{\, \mathrm d}
+\newcommand{\bigslant}[2]{{\raisebox{.2em}{$#1$}\left/\raisebox{-.2em}{$#2$}\right.}}
 \DeclareMathOperator{\Ree}{Re}
 \DeclareMathOperator{\Img}{Im}
 \DeclareMathOperator{\Arg}{Arg}
 \DeclareMathOperator{\dist}{dist}
 \DeclareMathOperator{\const}{const}
 \DeclareMathOperator{\Ln}{Ln}
+\DeclareMathOperator{\card}{card}
 
 \begin{document}
 
@@ -104,7 +107,7 @@
 \begin{remark}
 \mbox{}
     \begin{enumerate}
-        \item $\rho (x, y) = \varphi(x - y)$ — метрика
+        \item $\rho (x, y) = \varphi(x - y)$ — метрика.
         \item Если на пространстве задана норма $\|\cdot\|$, то $X = (L, \varphi)$ —
         нормированное пространство.
     \end{enumerate}
@@ -118,7 +121,7 @@
 \begin{definition}
     $\{x_n\} \subset X$ — фундаментальная последовательность (сходящаяся в себе,
     последовательность Коши), если $\|x_n - x_m\| \underto{m,n \to \infty} 0$, то есть
-    $\forall \varepsilon > 0 \exists N:$ $\forall m,n > N$ $\|x_m - x_m\| < \varepsilon$
+    $\forall \varepsilon > 0$ $\exists N$: $\forall m,n > N$ $\|x_m - x_m\| < \varepsilon$
 \end{definition}
 
 \begin{remark}
@@ -136,7 +139,8 @@
 \end{definition}
 
 \begin{definition}
-    Ряд сходится абсолютно, если $\sum\limits_{j = 1}^\infty \|x\|$ сходится.
+    Ряд $\sum\limits_{j = 1}^\infty x_j$ называется \emph{сходящимся абсолютно},
+    если $\sum\limits_{j = 1}^\infty \|x_j\|$ сходится.
 \end{definition}
 \begin{remark}
     Из абсолютной сходимости не следует обычная сходимость.
@@ -161,10 +165,13 @@ $\|S_n - S_m\| \to 0$, то нам нужна полнота пространс�
         $\|x\|_1 = |x_1| + \ldots + |x_n|$;
         \item $\ell_n^\infty = (\real^n, \|\cdot\|_\infty)$,
         где $\|x\|_\infty = \max\limits_{1 \leqslant j \leqslant n} |x_j|$;
-        \item $\ell_n^p = (\real(\complex), \|\cdot\|_p$,
-        $\|x\|_p = (\sum_{j=1}^n |x_j|^p)^{\frac{1}{p}}$, $p \geqslant 1$;
+        \item $\ell_n^p = (\real^n, \|\cdot\|_p$,
+        $\|x\|_p = \bigg(\sum\limits_{j=1}^n |x_j|^p\bigg)^{\frac{1}{p}}$,
+        $p \geqslant 1$;
         \item $C(\overline \Omega)$ с нормой
-        $\|x\| = \max\limits_{t \in \overline \Omega} |x(t)|$, где $\Omega$ — область в $\real^m$. $\overline\Omega$ — замыкание $\Omega$. Ясно, что $\overline \Omega$ — компакт в
+        $\|x\| = \max\limits_{t \in \overline \Omega} |x(t)|$, где
+        $\Omega$ — область в $\real^m$. $\overline\Omega$ — замыкание
+        $\Omega$. Ясно, что $\overline \Omega$ — компакт в
         $\real^m$.
     \end{itemize}
 \end{examples}
@@ -196,7 +203,8 @@ $\|S_n - S_m\| \to 0$, то нам нужна полнота пространс�
 
 \end{proof}
 
-Пусть $[a, b] \subset \real$ Рассмотрим пространство дифференцируемых функций $C^1[a, b]$.
+Пусть $[a, b] \subset \real$.
+Рассмотрим пространство дифференцируемых функций $C^1[a, b]$.
 Какую норму на нём выбрать?
 \begin{itemize}
     \item $\varphi_1(x) = \max\limits_{t \in [a, b]} |x(t)|$;
@@ -247,5 +255,181 @@ $\|S_n - S_m\| \to 0$, то нам нужна полнота пространс�
 
     Отсюда $\varphi_3(x_n - x) \to 0$
 \end{proof}
+
+\section{Пространства Лебега}
+
+\lparagraph{Неравенство Гёльдера}
+
+Рассмотрим $(T, \mu)$ — пространство с мерой, $x, y$ — измеримые функции, и числа
+$p, q > 0$ — сопряжённые показатели, т. е. $\frac{1}{p} + \frac{1}{q} = 1$. 
+Тогда верно неравенство:
+$$
+\int\limits_T |x(t)y(t)|\dif \mu(t) \leqslant
+\bigg(\int\limits_T |x(t)|^p\dif \mu(t)\bigg)^{\frac{1}{p}}
+\bigg(\int\limits_T |y(t)|^q\dif \mu(t)\bigg)^\frac{1}{q}
+$$
+
+\lparagraph{Неравенство Минковского}
+
+Если $(T, \mu)$ — пространство с мерой, $x, y$ — измеримые функции,
+$p \geqslant 1$, то верно неравенство:
+$$
+\bigg(\int\limits_T |x(t)|^p\dif \mu(t)\bigg)^{\frac{1}{p}} +
+\bigg(\int\limits_T |y(t)|^q\dif \mu(t)\bigg)^\frac{1}{q} \geqslant
+\int\limits_T |x(t)y(t)|\mathrm d\mu(t)
+$$
+
+Обозначение: $\|x\|_p = (\int\limits_T |x|^p)^\frac{1}{p}$.
+
+\begin{remark}
+    Частный случай — $p = q = 2$. Тогда неравенство Гёльдера оказывается
+    неравенством Коши-Буняковского-Шварца:
+    $$
+    \int\limits_T |x(t)|\cdot|y(t)|\dif \mu(t) \leqslant
+    \bigg(\int\limits_T |x(t)|^2\dif \mu(t)\bigg)^{\frac{1}{2}}
+    \bigg(\int\limits_T |y(t)|^2\dif\mu(t)\bigg)^\frac{1}{2}
+    $$
+\end{remark}
+\begin{remark}
+    Пусть $T = \mb N$, и если $M \subset \mb N$,
+    то $\#M = \card M$ — количество элементов $M$ — будет мерой.
+    Рассмотрим функцию $x: \mb N \to k$, где $k$ — некоторое поле скаляров.
+    Мы помним, что функция из натуральных чисел называется последовательностью.
+    Как можно вычислять $\int\limits_{\mb N}x(n)\mathrm d\#(n)$? Ясно,
+    что такой интеграл — это ряд $\sum\limits_{n \in \mb N} x(n)$, а суммируемые 
+    функции в этом случае будут абсолютно сходящимися рядами.
+    Неравенство Гёльдера будет выглядеть так:
+    $$
+    \sum_{n \in \mb N} |x_n||y_n| \leqslant
+    \bigg(\sum_{n \in \mb N} |x_n|^p\bigg)^\frac{1}{p}
+    \bigg(\sum_{n \in \mb N} |y_n|^p\bigg)^\frac{1}{p}
+    $$
+    А неравенство Минковского — так:
+    $$
+    \bigg(\sum_{n \in \mb N} |x_n|^p\bigg)^\frac{1}{p} +
+    \bigg(\sum_{n \in \mb N} |y_n|^p\bigg)^\frac{1}{p} \geqslant
+    \bigg(\sum_{n \in \mb N} |x_n||y_n|\bigg)^\frac{1}{p}
+    $$
+\end{remark}
+
+\begin{definition}
+    Пространство Лебега $\mathcal{L}^p(T, \mu)$ — это множество
+    $\{x\, \big| \int\limits_T |x|^p\dif\mu <
+    \infty\}$.
+    Оно линейно: $x, y \in \mathcal{L}^p \implies
+    x + y \in \mathcal{L}^p$ и $\lambda y \in \mathcal{L}^p$
+\end{definition}
+
+Заметим, что $\|x\|_p = \bigg(\int\limits_T |x|^p\mathrm d\mu\bigg)^\frac{1}{p}$ — полунорма
+на $\mathcal{L}^p(T, \mu)$. Если $\|x\|_p = 0$, то $x = 0$ почти везде.
+
+Чтобы получить норму, введём следующее отношение эквивалентности:
+$$
+x_1 \sim x_2 \text{ если } x_1 - x_2 = 0 \text{ почти везде.}
+$$
+Тогда
+$$
+\bigslant{\mathcal{L}^p(T, \mu)}{\sim} = L^p(T, \mu)
+$$
+— это настоящее пространство Лебега. В дальнейшем мы будем считать функции, 
+отличающиеся на множестве меры нуль, одинаковыми.
+
+\begin{remark}
+    Пусть $T \subset \real^n$, $\mu = \lambda$ — мера Лебега. Тогда будем 
+    обозначать $L^p(T, \mu) = L^p(T)$.
+\end{remark}
+
+\begin{theorem}
+    Пространство $L^p(T, \mu)$ полно при $p \geqslant 1$.
+\end{theorem}
+
+\begin{example}
+    Рассмотрим $L^2(0, +\infty)$ и $L^1(0, +\infty)$. Какое из этих пространств 
+    является вложением в другое? Возьмём функцию $x(t) = \frac{1}{t + 1}$.
+    $$
+    \int\limits_0^\infty \frac{1}{t + 1}\mathrm dt = \infty
+    $$
+    $$
+    \int\limits_0^\infty \frac{1}{(t+1)^2} \mathrm dt < \infty
+    $$
+    Отсюда видно, что $L^2(0, +\infty) \not\subset L^1(0, +\infty)$. Легко 
+    придумать и пример, доказывающий отсутствие включения в обратную сторону.
+\end{example}
+
+\begin{theorem}[О вложенности пространств $L^p$]
+Пусть $1 \leqslant p_1 < p_2 \leqslant \infty$. Тогда:
+    \begin{enumerate}
+        \item $\ell^{p_1} \subset \ell^{p_2}$.
+        \item Если $(T, \mu)$ — пространство с мерой, $\mu(T) < \infty$, то
+        $L^{p_1}(T, \mu) \supset L^{p_2}(T, \mu)$
+    \end{enumerate}
+\end{theorem}
+\pagebreak
+\begin{proof}
+\mbox{}
+    \begin{enumerate}
+        \item Пусть $x = (x_1, x_2, x_3, \ldots)$. Хотим проверить, что
+        $x \in \ell^{p_1} \implies x \in \ell^{p_2}$.
+        $$
+        \sum\limits_{j = 1}^\infty |x_j|^{p_1} < \infty \implies
+        \exists N\quad \forall j > N\quad |x_j| < 1 \implies
+        |x_j|^{p_1} < |x_j|^{p_2}
+        $$
+        $$
+        \sum\limits_{j = N + 1}^\infty |x_j|^{p_1} >
+        \sum\limits_{j = N + 1}^\infty |x_j|^{p_2} \implies
+        \sum\limits_{j = 1}^\infty |x_j|^{p_2} < \infty \implies x \in \ell^{p_2}
+        $$
+        \item Для доказательства второго пункта достаточно применить неравенство 
+        Гёльдера.
+    \end{enumerate}
+\end{proof}
+
+\section{Непрерывность. Сжимающее отображение}
+
+\begin{definition}
+    Возьмём отображение $F: X \to Y$, где $X$ и $Y$ — линейные нормированные
+    пространства. $F$ называется непрерывным в точке $x_0$, если:
+    $$
+    \forall \varepsilon > 0\quad
+    \exists \delta > 0:\quad \forall x: \|x - x_0\| < \delta\quad
+    \|F(x) -F(x_0)\| < \varepsilon
+    $$
+    $F$ называется непрерывным, если оно непрерывно во всех точках $X$.
+\end{definition}
+
+\begin{example}
+        $X = Y = C[0, 1]$, $\|x\|_{C[0, 1]} =
+        \max\limits_{t \in [0, 1]} |x(t)|$. Рассмотрим отображение
+        $(F(x))(t) = \int\limits_0^t x(s)\dif s$ и докажем, что оно 
+        непрерывно.
+        $$
+        \|F(x_1) - F(x_2)\| = \max_{t \in [0, 1]}
+        \bigg|\int\limits_0^t x_1(s)\dif s - \int\limits_0^t x_2(s)\dif s\bigg|
+        \leqslant
+        $$
+        $$
+        \leqslant
+        \max_t \int\limits_0^t |x_1(s) - x_2(s)|\dif s \leqslant
+        \max_t t \cdot \|x_1 - x_2\| \leqslant \|x_1 - x_2\|
+        $$
+        Достаточно взять $\delta = \varepsilon$ и всё доказано.
+\end{example}
+
+\begin{definition}
+    Отображение $F: X \to Y$ называется липшицевым, если существует такое $C$, что
+    для всех $x_1, x_2 \in X$ выполнено $\|F(x_1) - F(X_2)\| \leqslant
+    C\cdot\|x_1 - x_2\|$
+\end{definition}
+
+Заметим, что из липшицевости отображения следует его непрерывность. Достаточно 
+взять $\delta = \frac{\varepsilon}{C}$.
+
+\begin{definition}
+    Отображение $F: X \to Y$ называется сжимающим, если существует такое
+    $\gamma < 1$, что $\forall x_1, x_2 \in X$ выполнено $\|F(x_1) - F(x_2)\|
+    \leqslant
+    \gamma \|x_1 - x_2\|$.
+\end{definition}
 
 \end{document}
