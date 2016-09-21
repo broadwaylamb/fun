@@ -53,6 +53,7 @@
 \newcommand{\pd}[2]{\frac{\partial #1}{\partial #2}}
 \newcommand{\uto}{\rightrightarrows}
 \newcommand{\underto}[1]{\xrightarrow[#1]{}}
+\newcommand{\overto}[1]{\xrightarrow{#1}}
 \newcommand{\dif}{\, \mathrm d}
 \newcommand{\bigslant}[2]{{\raisebox{.2em}{$#1$}\left/\raisebox{-.2em}{$#2$}\right.}}
 \DeclareMathOperator{\Ree}{Re}
@@ -62,6 +63,7 @@
 \DeclareMathOperator{\const}{const}
 \DeclareMathOperator{\Ln}{Ln}
 \DeclareMathOperator{\card}{card}
+\DeclareMathOperator{\Ker}{Ker}
 
 \begin{document}
 
@@ -410,8 +412,8 @@ $$
         $$
         $$
         \leqslant
-        \max_t \int\limits_0^t |x_1(s) - x_2(s)|\dif s \leqslant
-        \max_t t \cdot \|x_1 - x_2\| \leqslant \|x_1 - x_2\|
+        \max_{t \in [0, 1]} \int\limits_0^t |x_1(s) - x_2(s)|\dif s \leqslant
+        \max_{t \in [0, 1]} t \cdot \|x_1 - x_2\| = \|x_1 - x_2\|
         $$
         Достаточно взять $\delta = \varepsilon$ и всё доказано.
 \end{example}
@@ -431,5 +433,236 @@ $$
     \leqslant
     \gamma \|x_1 - x_2\|$.
 \end{definition}
+
+\begin{theorem}[Банаха о неподвижной точке]
+    Если пространство $X$ — полное, а отображение $F$ — сжимающее, то существует
+    единственный элемент $x_\ast \in X$ такой, что $F(x_\ast) = x_\ast$. Этот
+    элемент называется неподвижной точкой.
+\end{theorem}
+\begin{proof}
+    Докажем существование. Возьмём \emph{траекторию} точки $x_1$:
+    $$
+    x_1, \underbrace{F(x_1)}_{x_2}, \underbrace{F(F(x_1))}_{x_3}, \ldots,
+    \text{ т. е. } x_{n+1} = F(x_n)
+    $$
+    $$
+    \|x_{n+1} - x_n\| = \|F(x_n) - F(x_{n-1})\| \leqslant \gamma \|x_n - x_{n-1}\|
+    \leqslant \gamma^2\|x_{n-1} - x_{n-2}\| \leqslant \ldots \leqslant
+    \gamma^{n+1}\underbrace{\|x_2 - x_1\|}_{\alpha}
+    $$
+    Таким образом, при $m > n$:
+    $$
+    \|x_m - x_n\| \leqslant \|x_m - x_{m-1}\| + \|x_{m-1} - x_{m-2}\| + \ldots
+    + \|x_{n+1} - x_n\| \leqslant \alpha\gamma^{m-2} + \alpha\gamma^{m-3} +\ldots +
+    $$
+    $$
+    + \alpha\gamma^{n-1} \leqslant \sum\limits_{j = n-1}^\infty \alpha\gamma^j =
+    \alpha\gamma^{n-1}\frac{1}{1-\gamma} \underto{n \to \infty} 0
+    $$
+    Отсюда получаем, что $\{x_n\}$ фундаментальна, а значит существует
+    $\lim\limits_{n \to \infty} x_n$. Обозначим его за $x_\ast$. Ясно, что это
+    и будет неподвижная точка.
+    
+    Докажем единственность. Пусть $x_\ast$ и $x^\ast$ — две неподвижные точки.
+    Тогда:
+    $$
+    \underbrace{\|F(x_\ast) - F(x^\ast)\|}_{\leqslant \gamma\|x_\ast - x^\ast\|} =
+    \|x_\ast - x^\ast\|
+    $$
+    Отсюда $\|x_\ast - x^\ast\| = 0$, что и требовалось.
+\end{proof}
+
+\begin{theorem}
+    Пусть пространство $X$ — полное, $F: X \to X$ и существует $n$ такое, что
+    $F^n$ — сжимающее. Тогда существует единственная точка $x_\ast$ такая, что
+    $F(x_\ast) = x_\ast$.
+\end{theorem}
+\begin{proof}
+    Если $F^n$ сжимающее, то существует (и единственна) неподвижная точка:
+    $F^n(x_\ast) = x_\ast$.
+    Условие теоремы подразумевает, что если $F$ переводит точку $x_\ast$ в
+    некоторую точку $x_1$, которую, в свою очередь, переводит в $x_2$, то через
+    $n$ итераций точка $x_{n-1}$ снова переходит в $x_\ast$. Отсюда следует,
+    что точки $x_1,\ldots,x_{n-1}$ — тоже неподвижные точки $F^n$. Но по теореме
+    Банаха такая точка у $F^n$ только одна, следовательно,
+    $x_\ast = x_1 = x_2 = \ldots = x_{n-1}$.
+\end{proof}
+\begin{example}[Интегральное уравнение Фредгольма I рода]
+    Пусть нам даны функции $K(s,t)$ и $a(t)$. Мы хотим найти функцию $x(t)$,
+    удовлетворяющую уравнению:
+    $$
+    x(t) = a(t) + \int\limits_{s_1}^{s_2} K(s,t) x(s) \dif s
+    $$
+    Будем рассматривать частный случай, в котором $K \in C([0,1]\times[0,1])$,
+    $a \in C[0,1]$. Задача — найти $x \in C[0,1]$ такое, что
+    $$
+    x(t) = a(t) + \int\limits_0^t K(s,t) x(s) \dif s
+    $$
+\end{example}
+\begin{proposition}
+    Это уравнение имеет единственное решение.
+\end{proposition}
+\begin{proof}
+    Рассмотрим отображение $F: C[0, 1] \to C[0, 1]$.
+    $$
+    (F(x))(t) = a(t) + \int\limits_0^t K(s, t)x(s)\dif s
+    $$
+    Заметим, что оно, вообще говоря, не является сжимающим.
+    Рассмотрим также $(F_0(x))(t) = \int\limits_0^t K(s, t)x(s)\dif s$.
+    
+    Обратим внимание на несколько важных свойств:
+    \begin{itemize}
+        \item $F_0(x) - F_0(y) = F_0(x - y)$
+        \item $F(x) - F(y) = F_0(x) - F_0(y)$
+        \item $F^n(x) - F^n(y) = F(F^{n-1}(x) - F^{n-1}(y)) =
+        F_0(F^{n-1}(x)) - F_0(F^{n-1}(y)) = F_0(F^{n-1}(x) - F^{n-1}(y)) =
+        F_0^n(x-y)$
+    \end{itemize}
+    $$
+    (F_0(x - y))(t) = \int\limits_0^t K(s_1, t)(x(s_1) - y(s_1))\dif s_1
+    $$
+    $$
+    (F_0^2(x-y))(t) = \int\limits_0^t K(s_2, t)
+    \int\limits_0^{s_2} K(s_1, s_2)(x(s_1) - y(s_1))\dif s_1\dif s_2
+    $$
+    $$
+    \cdots
+    $$
+    $$
+    (F_0^n(x-y))(t) = \int\limits_0^t K(s_n, t)
+    \int\limits_0^{s_n} K(s_{n-1}, s_n)\int\limits_0^{s_{n-1}}\ldots
+    \int\limits_0^{s_2} K(s_1, s_2)(x(s_1) - y(s_1))\dif s_1\dif s_2\ldots
+    \dif s_n
+    $$
+    Получаем:
+    $$
+    \|F_0^n(x-y)\| = \max_{t \in [0, 1]} |(F_0^n(x-y))(t)|
+    \leqslant M^n\|x-y\|\max_{t \in [0, 1]} \int\limits_0^t\int\limits_0^{s_n}
+    \int\limits_0^{s_{n-1}}\ldots\int\limits_0^{s_3}\int\limits_0^{s_2}
+    \dif s_1\dif s_2 \ldots \dif s_n \leqslant \frac{M^n}{n!}\|x-y\|
+    $$
+    Здесь $M = \max |K|$. Коэффициент $\frac{M^n}{n!}$ стремится к нулю, а
+    это значит, что $F_0^n$ — сжимающее, следовательно, существует неподвижная
+    точка.
+\end{proof}
+
+\begin{example}
+    Допустим, что мы хотим решить дифференциальное уравнение
+    $y'(t) = a(t)y(t) + b(t)$, $y(0) = y_0$, $a,b \in C[0, 1]$ на промежутке
+    $[0, 1]$. Это
+    уравнение имеет единственное решение $y \in C^1[0, 1]$. Как это доказать?
+    Рассмотрим интегральное уравнение:
+    $$
+    x(t) = \int\limits_0^t a(s)x(s)\dif s + B(t)
+    $$
+    По предыдущей теореме существует $x \in C[0,1]$, решающее это
+    уравнение. Для этого уравнения также верны утверждения:
+    \begin{itemize}
+        \item $x'(t) = a(t)x(t) + b(t)$, где $b(t) = B'(t)$;
+        \item $x(0) = B(0)$.
+    \end{itemize}
+    Для решения исходной задачи достаточно выбрать $B$ такое, что $B' = b$ и
+    $B(0) = y_0$. Откуда взять непрерывную дифференцируемость $y$?
+    $$
+    b\in C[0,1] \implies B\in C^1[0,1],
+    $$
+    $$
+    \quad x\in C[0,1],\, a\in C[0,1] \implies
+    \int\limits_0^t xa \in C^1[0,1]
+    $$
+    Таким образом всё доказано.
+\end{example}
+
+\section{Линейные операторы}
+\begin{definition}
+    Пусть $X$, $Y$ — линейные нормированные пространства над одним полем скаляров.
+    Отображение $U: X \to Y$ называется линейным, если:
+    \begin{enumerate}
+        \item $U(x_1+x_2) = U(x_1) + U(x_2)$ $\forall x_1, x_2 \in X$
+        \item $U(\lambda x) = \lambda U(x)$, где $\lambda$ — скаляр, $x \in X$
+    \end{enumerate}
+\end{definition}
+\begin{remark}
+    Ясно, что выполнение обоих этих свойств равносильно
+    $U(\lambda_1x_1 + \lambda_2x_2) = \lambda_1U(x_1) + \lambda_2U(x_2)$.
+\end{remark}
+\begin{remark}
+    В дальнейшем будем обозначать $U(x)$ как $U_x$.
+\end{remark}
+\begin{proposition}[Свойства линейных отображений]
+\mbox{}
+    \begin{enumerate}
+        \item $U(0) = 0$;
+        \item $U(\sum\limits_{j=1}^n \lambda_j x_j) = \sum\limits_{j=1}^n
+        \lambda_j U_{x_j}$;
+        \item\label{image_linearity} Если $M \subset X$ — линейное множество,
+        то множество
+        $U(M)$ линейно в $Y$. Если $M \subset X$ — выпуклое множество,
+        то множество $U(M)$ выпукло в $Y$;
+        \item\label{preimage_linearity} Если $N \in Y$ — линейное (выпуклое),
+        то $U^{-1}(N)$ — линейное (выпуклое). Частный случай: если $N = \{0\}$, то множество
+        $U^{-1}(N) = U^{-1}(\{0\}) = \Ker U$ — линейное в $X$;
+        \item $\Ker U = \{0\} \iff U$ инъективно;
+        \item\label{inverse_linearity} Если $U$ — линейная биекция, то
+        $U^{-1}$ — линейное;
+        \item Пусть $U_1, U_2: X \to Y$ — линейные. Тогда $U_1 + U_2$,
+        $\lambda U_1$ тоже линейны;
+        \item Если $X \overto{U} Y \overto{V} Z$, то композиция $V\circ U$
+        линейна.
+    \end{enumerate}
+\end{proposition}
+\begin{definition}
+    Множество $M$ называется выпуклым, если для любых $x_1,x_2 \in M$ отрезок
+    $[x_1, x_2]$ лежит в $M$.
+\end{definition}
+\begin{proof}[Доказательство предложения]
+    Докажем выпуклость в свойстве \ref{image_linearity}.
+    $$
+    y_1, y_2 \in U(M) \implies \exists x_1, x_2 \in M:\, U_{x_1} = y_1,\,
+    U_{x_2} = y_2
+    $$
+    $$
+    \lambda y_1 + (1-\lambda)y_2 = \lambda U_{x_1} + (1 - \lambda)U_{x_2} =
+    U(\underbrace{\lambda x_1 + (1-\lambda)x_2}_{\in M}) \in U(M)
+    $$
+    
+    В свойстве \ref{preimage_linearity}:
+    $$
+    x_1, x_2 \in U^{-1}(N) \implies U_{x_1}, U_{x_2} \in N \implies
+    \forall \lambda_1, \lambda_2\quad \lambda_1 U_{x_1} + \lambda_2 U_{x_2} \in N
+    \implies
+    $$
+    $$
+    \implies U(\lambda_1 x_1 + \lambda_2 x_2) \in N \implies
+    \lambda_1x_1 + \lambda_2x_2 \in U^{-1}(N)
+    $$
+    
+    В свойстве \ref{inverse_linearity} биективность $U$ означает, что
+    $\forall y_1, y_2$ $\exists x_1, x_2$ такие, что $U_{x_1} = y_1$,
+    $U_{x_2} = y_2$. Отсюда $U^{-1}(y_1+y_2) = U^{-1}(U_{x_1} + U_{x_2}) =
+    U^{-1}(U(x_1 + x_2)) = x_1 + x_2 = U^{-1}(x_1) + U^{-1}(x_2)$.
+    
+    Доказательства остальных свойств тривиальны.
+\end{proof}
+
+\begin{theorem}[Эквивалентные условия непрерывности линейного отображения]
+    Пусть $U:~X \to Y$ — линейный оператор. Тогда следующие утверждения
+    эквивалентны:
+    \begin{enumerate}
+        \item $U$ непрерывен;
+        \item $U$ непрерывен в нуле;
+        \item Образ любого ограниченного множества ограничен;
+        \item Существует $C$ такое, что $\forall x\in X$
+        выполняется $\|U_x\|_Y = C\|x\|_X$.
+    \end{enumerate}
+\end{theorem}
+\begin{proof}
+\mbox{}
+    \begin{itemize}
+        \item $1 \Rightarrow 2$. Tривиально.
+        \item $4 \Rightarrow 1$. $\|U_{x_1} - U_{x_2}\| \leqslant
+        C\|x_1 - x_2\|$. Это влечёт липшицевость и, как следствие, непрерывность.
+    \end{itemize} 
+\end{proof}
 
 \end{document}
