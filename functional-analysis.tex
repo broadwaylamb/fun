@@ -587,14 +587,14 @@ $$
     $U(\lambda_1x_1 + \lambda_2x_2) = \lambda_1U(x_1) + \lambda_2U(x_2)$.
 \end{remark}
 \begin{remark}
-    В дальнейшем будем обозначать $U(x)$ как $U_x$.
+    В дальнейшем будем обозначать $U(x)$ как $Ux$.
 \end{remark}
 \begin{proposition}[Свойства линейных отображений]
 \mbox{}
     \begin{enumerate}
         \item $U(0) = 0$;
         \item $U(\sum\limits_{j=1}^n \lambda_j x_j) = \sum\limits_{j=1}^n
-        \lambda_j U_{x_j}$;
+        \lambda_j Ux_j$;
         \item\label{image_linearity} Если $M \subset X$ — линейное множество,
         то множество
         $U(M)$ линейно в $Y$. Если $M \subset X$ — выпуклое множество,
@@ -618,18 +618,18 @@ $$
 \begin{proof}[Доказательство предложения]
     Докажем выпуклость в свойстве \ref{image_linearity}.
     $$
-    y_1, y_2 \in U(M) \implies \exists x_1, x_2 \in M:\, U_{x_1} = y_1,\,
-    U_{x_2} = y_2
+    y_1, y_2 \in U(M) \implies \exists x_1, x_2 \in M:\, Ux_1 = y_1,\,
+    Ux_2 = y_2
     $$
     $$
-    \lambda y_1 + (1-\lambda)y_2 = \lambda U_{x_1} + (1 - \lambda)U_{x_2} =
+    \lambda y_1 + (1-\lambda)y_2 = \lambda Ux_1 + (1 - \lambda)Ux_2 =
     U(\underbrace{\lambda x_1 + (1-\lambda)x_2}_{\in M}) \in U(M)
     $$
     
     В свойстве \ref{preimage_linearity}:
     $$
-    x_1, x_2 \in U^{-1}(N) \implies U_{x_1}, U_{x_2} \in N \implies
-    \forall \lambda_1, \lambda_2\quad \lambda_1 U_{x_1} + \lambda_2 U_{x_2} \in N
+    x_1, x_2 \in U^{-1}(N) \implies Ux_1, Ux_2 \in N \implies
+    \forall \lambda_1, \lambda_2\quad \lambda_1 Ux_1 + \lambda_2 Ux_2 \in N
     \implies
     $$
     $$
@@ -638,8 +638,8 @@ $$
     $$
     
     В свойстве \ref{inverse_linearity} биективность $U$ означает, что
-    $\forall y_1, y_2$ $\exists x_1, x_2$ такие, что $U_{x_1} = y_1$,
-    $U_{x_2} = y_2$. Отсюда $U^{-1}(y_1+y_2) = U^{-1}(U_{x_1} + U_{x_2}) =
+    $\forall y_1, y_2$ $\exists x_1, x_2$ такие, что $Ux_1 = y_1$,
+    $Ux_2 = y_2$. Отсюда $U^{-1}(y_1+y_2) = U^{-1}(Ux_1 + Ux_2) =
     U^{-1}(U(x_1 + x_2)) = x_1 + x_2 = U^{-1}(x_1) + U^{-1}(x_2)$.
     
     Доказательства остальных свойств тривиальны.
@@ -660,9 +660,146 @@ $$
 \mbox{}
     \begin{itemize}
         \item $1 \Rightarrow 2$. Tривиально.
-        \item $4 \Rightarrow 1$. $\|U_{x_1} - U_{x_2}\| \leqslant
+        \item $4 \Rightarrow 1$. $\|Ux_1 - Ux_2\| \leqslant
         C\|x_1 - x_2\|$. Это влечёт липшицевость и, как следствие, непрерывность.
+        \item $2 \Rightarrow 3$. Непрерывность в нуле означает, что
+        $\forall \varepsilon > 0$ $\exists \delta > 0$ такое, что
+        $\|x\|<\delta \implies \|Ux\|<\varepsilon$. Ограниченность множества $M$ в $X$
+        означает, что $\exists R:$ $N \subset B_R(0)=\{\|x\|\leqslant R\}$.
+        Таким образом, $x\in M \implies \|x\| \leqslant R$.
+        $\|\frac{\delta}{2R}x\| \leqslant \frac{\delta}{2} < \delta \implies
+        \|U(\frac{\delta}{2R}x)\| < \varepsilon$. Отсюда
+        $\|Ux| \leqslant \frac{\varepsilon\cdot 2R}{\delta} \implies Ux
+        \in B_{\frac{\varepsilon\cdot 2R}{\delta}}(0)$. То есть, $U(M)$ ограничено.
+        \item $3 \Rightarrow 4$. $B_1(0)$ — ограниченное множество. Тогда
+        $U(B_1(0))$ — ограничено, т. е. существует такое $C$, что
+        $U(B_1(0)) \subset B_C(0)$. Если $\|x\|\leqslant 1$, то $\|Ux\| \leqslant C$.
+        Теперь возьмём произвольное $x$. $x' = \frac{x}{\|x\|} \in B_1(0) \implies
+        \|Ux'\| \leqslant C$. Но $\|Ux\| = \|U\big(\frac{x}{\|x\|}\big)\| =
+        \frac{1}{\|x\|} \cdot \|Ux\|$. Отсюда $\|Ux\|\leqslant C\|x\|$.
     \end{itemize} 
 \end{proof}
+
+\begin{definition}
+    Пусть $U: X \to Y$ — линейный непрерывный оператор. Тогда нормой оператора $U$
+    называется величина $\|U\| = \inf\,\{C\,\big|\,\|Ux\| \leqslant C \|x\|\}$.
+\end{definition}
+\begin{remark}
+    В формулировке определения инфимум и минимум совпадают (это можно доказать, перейдя к 
+    пределу в неравенстве $\|Ux\| \leqslant C \|x\|$).
+\end{remark}
+\begin{remark}
+    Выполнено неравенство $\|Ux\|_Y \leqslant \|U\|\cdot \|x\|_X$. В частности,
+    $\frac{\|Ux\|_Y}{\|x\|_X} \leqslant \|U\|$ $\forall x \in X$, т. е. можно записать
+    $\|U\| = \sup\limits_{x \neq 0}\frac{\|Ux\|}{\|x\|}$. 
+\end{remark}
+\begin{theorem}[Об эквивалентных способах определения нормы оператора]
+     Пусть $U: X \to Y$ — линейный непрерывный оператор. Тогда:
+     $$
+     \|U\| = \underbrace{\sup\limits_{x \neq 0}\frac{\|Ux\|}{\|x\|}}_A =
+     \underbrace{\sup\limits_{\|x\|\leqslant 1} \|U_x\|}_B =
+     \underbrace{\sup\limits_{\|x\| < 1} \|U_x\|}_C =
+     \underbrace{\sup\limits_{\|x\| = 1} \|U_x\|}_D
+     $$
+\end{theorem}
+\begin{remark}
+    Так как замкнутость и ограниченность, вообще говоря, неравносильна компактности
+    (за исключением конечномерных пространств),
+    в $\sup\limits_{\|x\|\leqslant 1} \|Ux\|$ максимум может и не достигаться.
+\end{remark}
+\begin{proof}[Доказательство теоремы]
+    Очевидно, что $B \geqslant C$ и $B \geqslant D$.
+    $$
+    B =\sup\limits_{\|x\|\leqslant 1,\,x \neq 0} \|Ux\| \leqslant
+    \sup\limits_{\|x\|\leqslant 1,\,x \neq 0} \frac{\|Ux\|}{\|x\|} \leqslant
+    \sup\limits_{x \neq 0} \frac{\|Ux\|}{\|x\|} = A
+    $$
+    Докажем, что $D \geqslant A$. Возьмём $x'=\frac{x}{\|x\|}$, тогда $\|x'\|=1$ и
+    $\|Ux\|\leqslant D$. $\|U(\frac{x}{\|x\|})\| = \frac{\|Ux\|}{\|x\|}$.
+    Итак, $\frac{\|Ux\|}{\|x\|} \leqslant D$, тогда и
+    $\sup\limits_{x \neq 0}\frac{\|Ux\|}{\|x\|}$.
+    Осталось проверить, что $C \geqslant A$. Возьмём $x \neq 0$, $\varepsilon > 0$.
+    Рассмотрим $x' = \frac{x}{\|x\|(1 + \varepsilon)}$. Тогда $\|x\| < 1$. Отсюда
+    следует, что $\|Ux'\| \leqslant C \implies \frac{\|Ux\|}{\|x\|(1+\varepsilon)}
+    \leqslant C \implies \frac{\|Ux\|}{\|x\|}\leqslant C(1 + \varepsilon)$. Устремив
+    $\varepsilon \to 0$, получим
+    $A = \sup\limits_{x \neq 0} \frac{\|Ux\|}{\|x\|} \leqslant C$.
+\end{proof}
+
+\section{Пространства линейных непрерывных операторов}
+\begin{definition}
+    Пусть $X$, $Y$ — линейные нормированные пространства над одним полем скаляров. Возьмём
+    $B(X,Y) = \{U: X \to Y,\, U \text{ — линейно, непрерывно}\}$.
+    Это \emph{линейное пространство}.
+\end{definition}
+\begin{theorem}[О свойствах операторной нормы]
+    $U,V \in B(X, Y)$.
+    \begin{enumerate}
+        \item $\|U\| \geqslant 0$, $\|U\| = 0 \iff U = 0$;
+        \item $\|\lambda U\| = |\lambda|\|U\|$ ($\lambda$ — скаляр);
+        \item $\|U + V\| \leqslant \|U\| + \|V\|$;
+        \item $W \in B(Y,Z)$. $WU \in B(X, Z)$, $\|WU\| \leqslant \|W\|\|U\|$.
+    \end{enumerate}
+\end{theorem}
+\begin{proof}
+\mbox{}
+    \begin{enumerate}
+        \item Неотрицательность очевидна. Если $\|U\|=0$, то $\|Ux\|\leqslant
+        0\cdot \|x\| \implies \|Ux\| = 0$ $\forall x$;
+        \item $\|\lambda U\| = \sup\limits_{\|x\|=1} \|(\lambda U)(x)\| =
+         \sup\limits_{\|x\|=1} |\lambda|\|Ux\| = |\lambda| \sup\limits_{\|x\|=1}
+         \|U_x\| =
+         |\lambda|\|U\|$;
+         \item $x \in X$. $\|(U+V)(x) = \|Ux + Vx\| \leqslant \|Ux\| + \|Vx\|
+         \leqslant \|U\|\|x\| + \|V\|\|x\| = (\|U\| + \|V\|)\|x\|$
+         \item $x \in X$. $\|(WU)(x)\| = \|W(U(x))\| \leqslant \|W\|\cdot \|Ux\|
+         \leqslant \|W\|\|U\|\|x\|$.
+    \end{enumerate}
+\end{proof}
+\begin{theorem}[О полноте пространства операторов]
+    Если $Y$ полно, то $B(X, Y)$ полно.
+\end{theorem}
+\begin{proof}
+    Возьмём фундаментальную последовательность линейных непрерывных отображений
+    $U_n \in B(X, Y)$, то есть $\|U_n - U_m\| \underto{m,n \to \infty} 0$:
+    $\forall \varepsilon>0$ $\exists N:$ $\forall m,n > N$ $\|U_n - U_m\| < \varepsilon$.
+    Это означает, что $\|(U_n - U_m)(x)\| \leqslant \varepsilon \|x\|$. Следовательно,
+    $\{U_nx\}$ фундаментальна в $Y$. Обозначим $Ux = \lim\limits_{n \to \infty}
+    U_nx$. Мы хотим проверить, что $U$ непрерывно, линейно и что есть сходимость.
+    \begin{enumerate}
+        \item (Линейность $U$). $U(\alpha_1x_1 + \alpha_2x_2) = \lim\limits_{n \to \infty}
+        U_n(\alpha_1x_1 + \alpha_2x_2) = 
+        \alpha_1 \lim U_nx_1 + \alpha_2\lim U_nx_2 = \alpha_1 Ux_1 +
+        \alpha_2 Ux_2$
+        \item (Нерерывность $U$). Возьмём любое $\varepsilon > 0$, $N$, $\forall m,n>N$,
+        $\forall x\in X$. $\|U_nx - U_mx\| \leqslant \varepsilon \|x\| \implies
+        \|Ux - U_mx\| \leqslant \varepsilon\|x\|$.
+        $\|Ux\| = \|(Ux - U_mx) + U_mx\| \leqslant \|(Ux - U_mx)\| + \|U_mx\| \leqslant
+        \varepsilon \|x\| + \|U_m\|\|x\|$. Отсюда $\|U\| \leqslant \varepsilon +
+        \|U_m\|$.
+        \item (Сходимость $U_n$ к $U$).
+        $\forall \varepsilon > 0$ $\exists N$: $\forall m,n>N$ $\forall x\in X$ $
+        \|U_nx - U_mx\| \leqslant \varepsilon \|x\|$. Устремив $n$ к бесконечности, 
+        получим: $\forall \varepsilon > 0$ $\exists N$: $\forall m > N$
+        $\forall x\in X$ $\|Ux - U_mx\| = \|(U - U_m)(x)\| \leqslant \|x\|$
+        $\implies \|U - U_m\| \leqslant \varepsilon$. Итак,
+        $\forall \varepsilon > 0$ $\exists N$: $\forall m > N$
+        $\|U - U_m\| \leqslant \varepsilon$, т. е. $U_n \to U$ в $B(X, Y)$.
+    \end{enumerate}
+\end{proof}
+
+Следует отметить важный частный случай.
+\begin{definition}
+    $B (X, \text{поле скаляров }) = X^\ast$ называется
+    \emph{сопряжённым пространством к $X$}. $f \in X^\ast$ называется \emph{линейным
+    непрерывным функционалом}.
+\end{definition}
+
+\begin{example}
+    $\|\cdot\|: X \to \real$ — функционал.
+\end{example}
+
+Норма функционала определяется как $\|f\| = \inf\,\{C\,\big|\,|f(x)| \leqslant C\|x\|\} =
+\sup\limits_{x \neq 0}\frac{|f(x)|}{\|x\|} = \sup\limits_{\|x\|=1} |f(x)|$.
 
 \end{document}
