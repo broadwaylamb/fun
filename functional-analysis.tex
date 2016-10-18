@@ -64,6 +64,8 @@
 \DeclareMathOperator{\Ln}{Ln}
 \DeclareMathOperator{\card}{card}
 \DeclareMathOperator{\Ker}{Ker}
+\DeclareMathOperator{\sign}{sign}
+\DeclareMathOperator{\diam}{diam}
 
 \begin{document}
 
@@ -795,11 +797,541 @@ $$
     непрерывным функционалом}.
 \end{definition}
 
-\begin{example}
-    $\|\cdot\|: X \to \real$ — функционал.
-\end{example}
-
-Норма функционала определяется как $\|f\| = \inf\,\{C\,\big|\,|f(x)| \leqslant C\|x\|\} =
+Норма функционала определяется как $\|f\| = \inf\,\{C\,\big|\,|f(x)|
+\leqslant C\|x\|\} =
 \sup\limits_{x \neq 0}\frac{|f(x)|}{\|x\|} = \sup\limits_{\|x\|=1} |f(x)|$.
+
+\section{Корректно разрешимые задачи}
+
+Рассмотрим отображение $A: X \to Y$. Мы хотим решить уравнение $Ax = f$. $f$ —
+какие-то известные данные.
+
+В общей постановке вопроса корректная разрешимость означает три вещи:
+\begin{itemize}
+    \item Решение существует для любого $f$.
+    \item Решение единственно.
+    \item Устойчивость: если $f_n \to f$, то для решений верно, что $x_n \to x$. 
+    (Здесь $Ax_n = f_n$, $Ax = f$.)
+\end{itemize}
+
+В частном случае, когда $X$ и $Y$ — линейные нормированные пространства и
+$A$ — линейное отображение, вышеописанные условия равносильны тому, что
+$A^{-1} \in B(Y, X)$.
+
+\begin{remark}
+    Самый простой пример корректно разрешимой задачи — случай, когда оператор
+    $A$ тождественен.
+\end{remark}
+
+\begin{theorem}[Об обратимости оператора, близкого к тождественному]
+    Если $B \in B(X, X)$, $X$ — полное и  $\|B\| < 1$, то существует оператор
+    $(I \pm B)^{-1} \in B(X, X)$. ($I$ — тождественный оператор.)
+\end{theorem}
+\begin{proof}
+    Приведём два способа доказать эту теорему.
+    \begin{enumerate}
+        \item Возьмём уравнение $(I-B)x = f$. Надо доказать, что для любого
+        $f \in X$ существует единственный $x \in X$, решающий это уравнение.
+        Это равносильно $x = f + Bx = g(x)$. Заметим, что $x$ удовлетворяет
+        уравнению тогда и только тогда, когда $x$ — неподвижная точка отображения
+        $g$. Проверим, что $g$ — сжимающее.
+        $\|g(x_1) - g(x_2)\| = \|(f + Bx_1) - (f + Bx_2)\| =
+        \|Bx_1 - Bx_2\| \leqslant \underbrace{\|B\|}_{< 1} \cdot \|x_1 - x_2\|$.
+        
+        Теперь проверим устойчивость. Пусть $f_n \to f$, $(I-B)x_n = f_n$,
+        $(I-B)x=f$. Нужно проверить, что $x_n \to x$. $x_n = f_n + Bx_n$,
+        $x = f + Bx$.
+        $$
+        \|x_n - x\| = \|f_n + Bx_n - f - Bx\| \leqslant \|f_n - f\| +
+        \|Bx_n - Bx\| \leqslant \|f_n - f\| + \|B\|\cdot \|x_n - x\|
+        $$
+        Отсюда
+        $$
+        0 \leqslant \underbrace{(1 - \|B\|)}_{>0}\|x_n - x\|\leqslant
+        \underbrace{\|f_n - f\|}_{\to 0} \implies
+        \|x_n - x\| \to 0
+        $$
+        \item Докажем формулу $(I - B)^{-1} = I + B + B^2 + B^2 + \ldots$.
+        Необходимо проверить, что этот ряд сходится. Докажем, что он
+        сходится абсолютно, то есть $\|I\| + \|B\| + \|B^2\| + \ldots < \infty$.
+        Заметим, что $\|B^k\| \leqslant \|B\|^k$. Отсюда
+        $\|I\| + \|B\| + \|B^2\| + \ldots \leqslant
+        \|I\| + \|B\| + \|B\|^2 + \ldots$. Но это — геометрическая прогрессия,
+        она сходится.
+        Частичные суммы: $S_n = I + B + \ldots B^{n-1}$,
+        $(I - B)S_n = S_n(I-B) = I - B^n \underto{n \to \infty} I$.
+        Мы воспользовались полнотой пространства, утверждая, что абсолютная
+        сходимость влечёт сходимость ряда.
+    \end{enumerate}
+\end{proof}
+
+\begin{theorem}[Об обратимости оператора, близкого к обратимому]
+    Пусть $U \in B(X, Y)$ — линейное отображение и существует $B^{-1}\in B(Y, X)$.
+    Кроме того, $X$ \textbf{или} $Y$ — полное пространство.
+    Рассмотрим $V\in B(X, Y)$ такой, что $\|V\| < \|U^{-1}\|^{-1}$. Тогда
+    существует $(U + V)^{-1} \in B(Y, X)$.
+\end{theorem}
+\begin{proof}
+    $U + V = U(I_X + U^{-1}V)$ (или $(I_Y + VU^{-1})U$).
+    Оператор $U$ обратим, обратный к нему оператор
+    непрерывен. Получаем $\|U^{-1}V\|\leqslant\|U^{-1}\|\cdot\|V\| < 1$.
+\end{proof}
+
+\section{Линейные непрерывные функционалы}
+
+Вспомним, что если $X$ — нормированное пространство, то
+$X^\ast = B(X, \text{поле скаляров})$ называется сопряжённым к $X$ пространством.
+Норма функционала определяется как $\|f\| = \inf\,\{C\,\big|\,|f(x)|
+\leqslant C\|x\|\} =
+\sup\limits_{x \neq 0}\frac{|f(x)|}{\|x\|} = \sup\limits_{\|x\|=1} |f(x)|$.
+
+\begin{example}[Функционалы в пространстве Лебега]
+        Рассмотрим $L^p(T, \mu)$, причём
+        $1 < p < \infty$. Возьмём $q$ — сопряжённый показатель такой, что
+        $\frac{1}{q} + \frac{1}{p} = 1$. Возьмём также $y_0 = L^q(T, \mu)$.
+        Определим функционал $f$ формулой
+        $f(x) = \int\limits_T x(t)y_0(t)\dif \mu(t)$. Нам нужно проверить, что
+        это действительно функционал, что он непрерывен (линейность очевидна).
+        Чтобы этот функционал был функционалом, необходимо, чтобы
+        подынтегральная функция была суммируемой. Для этого воспользуемся
+        неравенством Гёльдера:
+        $$
+        \int\limits_T |x(t)y_0(t)| \dif \mu(t) \leqslant
+        \bigg(\int\limits_T |x|^p\bigg)^\frac{1}{p}
+        \bigg(\int\limits_T |y_0|^q\bigg)^\frac{1}{q} = \|y_0\|_q\cdot \|x\|_p <
+        \infty
+        $$
+        $$
+        |f(x)| \leqslant \underbrace{\|y_0\|_q}_{=C} \cdot \|x\|
+        \implies \|f\| \leqslant \|y_0\|_q
+        $$
+        
+        Проверим, что $\|f\| \geqslant \|y_0\|_q$.
+        $$
+        x_0(t) = \frac{|y_0|^q}{y_0} = |y_0|^{q-1} \frac{|y_0|}{y_0} =
+        |y_0|^{q-1}\sign y_0
+        \implies x_0y_0 = |y_0|^q
+        $$
+        $$
+        |f(x_0)| = \bigg|\int\limits_T x_0y_0\bigg| = \int\limits_T|y_0|^q
+        $$
+        Но так как $\frac{1}{p} + \frac{1}{q} = 1$, то $(q-1)p = q$.
+        $$
+        \|x_0\|_p = \bigg(\int\limits_T |x_0|^p\bigg)^\frac{1}{p} =
+        \bigg(\int\limits_T |y_0|^{(q-1)p}\bigg)^\frac{1}{p} =
+        \bigg(\int\limits_T |y_0|^q\bigg)^\frac{1}{p}
+        $$
+        $$
+        \|f\|\geqslant \frac{|f(x_0)|}{\|x_0\|_p} =
+        \frac{\int\limits_T |y_0|^q}{\bigg(\int\limits_T} \cdots
+        $$
+        Таким образом, $L^q(T, \mu) \hookrightarrow L^q(T, \mu)^\ast$,
+        $y_0 \mapsto f$ и $\|y_0\|_q = \|f\|$. Имеет место
+        \emph{изометрическое вложение}, и даже более того, биекция.
+\end{example}
+\begin{example}
+    Рассмотрим пространство $C[-1, 1]$. Пусть $f(x) = \int\limits_{-1}^1
+    tx(t)\dif t$. Снова хотим доказать, что это функционал, что он непрерывен и 
+    линеен.
+    Для непрерывности достаточно установить, что $|f(x)| \equiv C\|x\|$.
+    $$
+    |f(x)| \leqslant \int\limits_{-1}^1 |t||x(t)|\dif t \leqslant
+    \max |x| \int\limits_{-1}^1 |t|\dif t = \|x\| \implies \|f\| \leqslant 1
+    $$
+    Непрерывность доказана.
+    Теперь возьмём функцию $x_\varepsilon(t) =
+    \begin{cases}
+        1,\quad t \geqslant \varepsilon \\
+        \frac{t}{\varepsilon},\quad |t|\leqslant \varepsilon \\
+        -1,\quad t \leqslant -\varepsilon\\
+    \end{cases}$.
+    $$
+    f(x_\varepsilon) = \int\limits_{-1}^1 tx_\varepsilon(t)\dif t =
+    \bigg(\int\limits_{-1}^{-\varepsilon} + \int\limits_\varepsilon^1\bigg)
+    |t|\dif t + \int\limits_{-\varepsilon}^\varepsilon \frac{t^2}{\varepsilon}
+    \dif t = 1 + O(\varepsilon)
+    $$
+    Получаем, что $\|f\|\geqslant \frac{f(x_\varepsilon}{\|x_\varepsilon\|}
+    \underto{\varepsilon \to 0} 1$.
+    Теперь возьмём
+    $y_0 \in L^1(-1, 1)$, $f(x) = \int\limits_{-1}^1 y_0(t)x(t)\dif t$.
+    $$
+    |f(x)| \leqslant \int\limits_{-1}^1 |y_0||x| \leqslant \|x\|\int\limits_{-1}^1
+    |y_0| \leqslant \|y_0\|_1\cdot \|x\|_C
+    $$
+    Значит, $f$ — линейный непрерывный функционал. $\|f\|=\|y_0\|_1$,
+    $x_0(t) = \sign y_0 \notin C$.
+\end{example}
+\begin{exercise}
+    Пусть $\delta(x) = x(0)$. Доказать, что $\delta \notin L^1(-1, 1)$, то есть
+    не существует $y_0 \in L^1(-1, 1)$ такого, что $\forall x\in C[-1, 1]$
+    $\int\limits_{-1}^1 y_0(t)x(t)\dif t = x(0)$
+\end{exercise}
+
+\begin{theorem}
+    $(c_0)^\ast = \ell^1$
+\end{theorem}
+
+Напомним, что $\ell^\infty = \{x = (x_1, x_2, \ldots),\, \|x\|_\infty = 
+\sup\limits_{j \geqslant 1} |x_j| < \infty\}$ и
+$c_0 = \{x = (x_1, x_2, \ldots),\, \lim\limits_{j \to \infty} x_j = 0\}$,
+$c_0 \subset \ell^\infty$. При этом $\|x\|_{c_0} = \|x\|_\infty$. $c_0$ — полное
+нормированное пространство.
+
+Рассмотрим $L_\text{fin} \subset \ell^\infty$ такое, что $x \in L_\text{fin}$,
+если у $x$ лишь конечное число ненулевых координат. Отметим, что $L_\text{fin}$
+является линейной оболочкой векторов $e_1, e_2, \ldots$, где
+$e_k = (0, 0, \ldots, 0,\underbrace{1}_{k}, 0, \ldots)$. Также
+$\overline{L_\text{fin}} = c_0$
+\begin{itemize}
+    \item $x \in c_0 \implies \exists x^{(n)} \in L_\text{fin}$: $x^{(n)} \to 
+    \infty$, где $x^{(n)} = (x_1, x_2, \ldots, x_n, 0, 0, \ldots)$.
+    $\|x - x^{(n)}\| = \|(0, 0, \ldots, 0, x_{n+1}, x_{n+2}, \ldots)\|_\infty =
+    \sup\limits_{j \geqslant n+1}|x_j|$.
+    \item $c_0$ замкнуто.
+\end{itemize}
+
+\begin{proof}
+\mbox{}
+    \begin{enumerate}
+        \item Возьмём $y^{(0)} \in \ell^1$, где
+        $y^{(0)} = (y_1^{(0)}, y_2^{(0)}, \ldots)$
+        и $\|y^{(0)}\|_1 = \sum\limits_{j=1}^\infty |y_j^{(0)}| < \infty$.
+        Построим по нему функционал на $c_0$.
+        
+        $\cdots$
+        
+        Мы построили вложение $\ell^1 \hookrightarrow (c_0)^\ast$, $y^{(0)} 
+        \mapsto f$.
+        \item Пусть нам дан функционал $f \in (c_0)^\ast$. Мы хотим построить по
+        нему $y \in \ell^1$. Положим $f(e_j) = y_j$ ($y = (y_1, y_2, \ldots)$).
+        Нам нужно проверить, что $y \in \ell^1$ и что
+        $\forall x$ $f(x) = \sum x_jy_j$.
+        Возьмём $z^{(n)} =
+        (\sign y_1, \sign y_2, \ldots, \sign y_n, 0, 0,\ldots)$.
+        $|f(z^{(n)}| \leqslant \|f\|\cdot \|z^{(n)}\|_\infty \leqslant \|f\|$.
+        Но левая часть неравенства равна $\sum\limits_{j=1}^\infty |y_j|$. Из
+        неравенства следует, что ряд сходится, отсюда $y \in \ell^1$.
+        
+        Покажем теперь, что $\forall x$ $f(x) = \sum x_jy_j$.
+        пусть $x = (x_1, x_2, \ldots) = \sum\limits_{j=1}^\infty x_je_j$.
+        $$
+        f\bigg(\sum\limits_{j=1}^n x_je_j\bigg) = \sum\limits_{j=1}^n x_jf(e_j) =
+        \sum\limits_{j=1}^n x_jy_j \underto{n \to \infty} \sum\limits_{j=1}^\infty
+        x_jy_j
+        $$
+        Левая часть стремится к $f(x)$, так как $\sum\limits_{j=1}^n = x_je_j
+        \underto{n \to \infty} x$.
+    \end{enumerate}
+\end{proof}
+
+\section{Интегральные операторы. Часть I}
+
+Что такое интегральный оператор? Допустим, у нас есть функция двух переменных
+$K(s, t)$, называемая \emph{ядром интегрального оператора} (не путать с ядром
+оператора). Оператор действует следующим образом: он берёт функцию $x(s)$ и
+преобразует её в функцию $(Ux)(t)$ по формуле
+$(Ux)(t) = \int K(s, t) x(s)$ (множество интегрирования и мера определяются 
+отдельно). Какими свойствами должна обладать функция $K$,
+чтобы этот оператор был <<хорошим>>?
+
+\subsection{Интегральные операторы в пространствах Лебега}
+
+Будем рассматривать переменные $s$ на множестве $S$ с мерой $\nu$ и $t$
+на множестве $T$ с мерой $\mu$, а также функцию
+$K: S \times T \to \text{поле скаляров}$, притом измеримую. Пусть $x$ — также
+измеримая функция на $S$, $(Ux)(t) = \int\limits_S K(s, t)x(s)\dif \nu(s)$.
+Какие условия нужно наложить на функцию $K$, чтобы оператор $U$ действовал из
+$L^p(s, \nu)$ в $L^r(T, \mu)$ и был непрерывен?
+
+$$
+\int\limits_T |(Ux)(t)|^r \leqslant \int\limits_T
+\bigg(\int\limits_S|K(s, t)||x(s)|\dif s\bigg)^r \dif t \leqslant
+\int\limits_T\bigg(\bigg(\int\limits_S |K(s, t)| \cdots
+$$
+
+Таким образом, мы доказали следующую теорему.
+
+\begin{theorem}[О гёльдеровских условиях непрерывности]
+    Если $\int\limits_T\bigg(\int\limits_S |K|^q \dif s\bigg)^\frac{r}{q} \dif t
+    < \infty$, то $U$ действует непрерывно из $L^p(s, \nu)$ в $L^r(T, \mu)$.
+\end{theorem}
+
+Пусть $p = 2$, $r = 2$, то есть $q = 2$. Тогда:
+$$
+\int\limits_T \int\limits_S |K(s, t)|^2 \dif s \dif t < \infty \iff
+K \in L^2(S\times T, \nu \times \mu)
+$$
+и $\|U\|\leqslant \|K\|_{L^2(S\times T, \nu\times \mu)}$. Операторы, 
+удовлетворяющие таким условиям, называются операторами Гильберта-Шмидта, а
+$K$ — ядром Гильберта-Шмидта.
+\begin{remark}
+    Существуют линейные непрерывные интегральные операторы, не являющиеся
+    операторами Гильберта-Шмидта.
+\end{remark}
+
+\subsection{Тест Шура}
+
+\begin{theorem}[Тест Шура]
+    Пусть $(Ux)(t) = \int\limits_S K(s, t)x(s)\dif \nu(s)$.
+    Предположим, что существуют строго положительные функции $\varphi: S \to 
+    \real$, $\psi: T \to \real$ и числа $A, B \in \real$ такие, что:
+    \begin{enumerate}
+        \item $\int\limits_S |K(s, t)|\varphi(s)\dif \nu(s) \leqslant A\psi(t)$ 
+        для почти всех $t \in T$.
+        \item $\int\limits_T |K(s, t)|\psi(s)\dif \mu(s) \leqslant B\varphi(s)$ 
+        для почти всех $s \in S$.
+    \end{enumerate}
+    Тогда $U$ — линейный непрерывный оператор из $L^2(S, \nu)$ в $L^2(T, \mu)$.
+\end{theorem}
+\begin{proof}
+    $$
+    |(Ux)(t)| \leqslant \int\limits_S \sqrt{|K(s, t)|\varphi(s)}
+    \sqrt{\frac{|K(s,t)||x(s)|^2}{\varphi(s)}} \dif \nu(s) \leqslant
+    \underbrace{\bigg(\int\limits_S |K(s,t)|\varphi(s) \dif s\bigg)^\frac{1}{2}
+    }_{\leqslant A\psi(t)}\bigg(\int\limits_S \frac{|K(s,t)||x(s)|^2}{\varphi(s)}
+    \dif s\bigg)^\frac{1}{2}
+    $$
+    $$
+    \int\limits_T |(Ux)(t)|^2 \dif t \leqslant \int\limits_T A\psi(t)
+    \int\limits_S \frac{|K(s,t)||x(s)|^2}{\varphi(s)} \dif s \dif t
+    $$
+\end{proof}
+
+\begin{exercise}
+\mbox{}
+    \begin{enumerate}
+        \item $S = T = (0, 1)$ с мерой Лебега, $K(s,t) = \frac{1}{\sqrt{|s-t|}}$.
+        Заметим, что получается оператор, не являющийся
+        оператором Гильберта-Шмидта, так как
+        $\int\limits_0^1\int\limits_0^1 \frac{1}{|s-t|\dif s\dif t} = +\infty$.
+        Придумать тест Шура для этого случая.
+        \item $S = T = \real$, $K(s,t) = e^{-(s + t)^2}$. Является $U$ оператором
+        Гильберта-Шмидта, и, если нет, является ли он непрерывным?
+        \item $S = T = (0, +\infty)$, $K(s,t) = e^{-st}$. Установить непрерывность
+        $U$ с помощью теста Шура.
+        \item $S = T = \mb N$, $\nu = \mu = \#$,
+        $K: \mb N \times \mb N \to \real$. Тогда оператор $U$ равен
+        $\sum\limits_{j=1}^\infty K_{ij}x_j$.
+    \end{enumerate}
+\end{exercise}
+\begin{theorem}[Тест Шура в дискретном случае]
+    Пусть существуют $\varphi_j > 0$, $\psi_i > 0$, $A, B$ такие, что
+    \begin{enumerate}
+        \item $\sum |K_{ij}|\varphi_j \leqslant A\psi_i$ $\forall i \in \mb N$
+        \item $\sum |K_{ij}|\psi_j \leqslant B\varphi_j$ $\forall j \in \mb N$
+    \end{enumerate}
+    Тогда $U: \ell^2 \to \ell^2$ непрерывен и $\|U\| \leqslant \sqrt{AB}$.
+\end{theorem}
+
+\begin{example}[Оператор Харди]
+    Оператор Харди $H$ действует в пространстве $L^2(0, +\infty)$:
+    $$
+    (Hx)(t) = \frac{1}{t}\int\limits_0^t x(s) \dif s
+    $$
+    
+    Частный случай: $H: \ell^2 \to \ell^2$ и
+    $(Hx)_k = \frac{1}{k}(x_1 + \ldots + x_k)$ (среднее арифметическое).
+    
+    Применим тест Шура.
+    $$
+    \frac{1}{t}\int\limits_0^t x(s) \dif s = \int\limits_0^\infty K(s,t)x(s)\dif s
+    $$
+    где $K(s,t) = \frac{1}{t}\chi_{[0,t]}(s) = \frac{1}{t}\chi_{[s, +\infty)(t)}$.
+    Возьмём $\varphi(s) \equiv 1$. Тогда
+    $$
+    \int\limits_0^\infty|K(s,t)|\varphi(s) \dif s =
+    \frac{1}{t}\int\limits_0^t \dif s = 1
+    $$
+    Взяв $\psi(t) \equiv 1$, получим
+    $$
+    \int\limits_0^\infty|K(s,t)|\psi(t) \dif t = \int\limits_0^\infty \frac{1}{t}
+    \dif t = \infty
+    $$
+    Значит, такое $\psi$ не подходит. Возьмём $\psi(t) = t^{-\alpha}$, где
+    $\alpha > 0$. Тогда
+    $$
+    \int\limits_0^\infty|K(s,t)|\psi(t) \dif t =
+    \int\limits_0^\infty \frac{1}{t^{\alpha + 1}} \dif t =
+    \frac{s^{-\alpha}}{\alpha}
+    $$
+    В качестве $\varphi(s)$ возьмём $s^{-\alpha}$.
+    $$
+    \int\limits_0^\infty|K(s,t)|\varphi(s) \dif s =
+    \frac{1}{t} \int\limits_0^t s^{-\alpha} \dif s =
+    \frac{1}{t} \frac{t^{1- \alpha}}{1 - \alpha} =
+    \frac{t^{-\alpha}}{1 - \alpha}
+    $$
+    Заметим, что при этом должно быть $\alpha < 1$. Кроме того,
+    $$
+    \|H\| \leqslant \frac{1}{\sqrt{\alpha(1 - \alpha)}}\quad
+    \forall \alpha \in (0, 1) \implies \|H\| \leqslant 2
+    $$
+\end{example}
+\begin{exercise}
+    Доказать, что $\|H\| = 2$.
+\end{exercise}
+
+\subsection{Интегральные операторы с непрерывным ядром}
+
+Будем рассматривать ограниченную область $\Omega \subset \real^m$, пространство
+$L^2(\Omega)$ и пространство непрерывных функций $C(\overline\Omega)$. Пусть также
+у нас есть функция
+$K: \overline\Omega \times \overline\Omega \to \real(\complex)$,
+$K \in C(\overline\Omega)$, $\|K\|_{C(\overline\Omega)} = M$.
+
+\begin{theorem}
+    Рассмотрим оператор $U$ такой, что
+    $(Ux)(t) = \int\limits_\Omega K(s,t)x(s) \dif s$. Верно, что
+    $U \in B(L^2(\Omega), C(\overline\Omega))$.
+\end{theorem}
+\begin{proof}
+    Докажем, что если $x \in L^2(\Omega)$, то $Ux \in C(\overline\Omega)$.
+    (Здесь непрерывность $x$ не гарантируется.)
+    
+    $$
+    |Ux(t_1) - Ux(t_2)| =
+    \bigg|\int\limits_\Omega K(s, t_1) - K(s, t_2)x(s) \dif s\bigg| \leqslant
+    \bigg(\int\limits_\Omega |K(s, t_1) - K(s, t_2)|^2 \dif s\bigg)^\frac{1}{2}
+    \|x\|_2
+    $$
+    По теореме Кантора $K$ равномерно непрерывно на
+    $\overline\Omega \times \overline\Omega$, то есть:
+    $$
+    \forall \varepsilon > 0\quad\exists \delta > 0:\quad
+    \underbrace{|(s_1, t_1) - (s_2, t_2)|}_{\sqrt{|s_1 - s_2|^2 + |t_1 - t_2|^2}}
+    < \delta \implies
+    |K(s_1, t_1) - K(s_2, t_2)| < \varepsilon
+    $$
+    
+    Если $|t_1 - t_2| < \delta$, то $|K(s, t_1) - K(s, t_2)| < \varepsilon$,
+    отсюда $|Ux(t_1) - Ux(t_2) < \varepsilon |\Omega|^\frac{1}{2}\cdot \|x\|_2$
+    
+    Теперь докажем, что $\|Ux\|_{C(\overline\Omega)}
+    \leqslant C \|x\|_{L^2(\Omega)}$.
+    $$
+    \|Ux\|_{C(\overline\Omega)} = \max\limits_{t \in \overline \Omega}
+    \bigg| \int\limits_\Omega K(s, t)x(s) \dif s\bigg| \leqslant
+    \max\limits_{t \in \overline \Omega} \bigg(\int\limits_\Omega |K(s, t)|^2
+    \dif s\bigg)^\frac{1}{2} \|x\|_2 \leqslant
+    (M^2 \cdot |\Omega|)^\frac{1}{2}\|x\|_{L^2(\Omega)}
+    $$
+\end{proof}
+
+Рассмотрим оператор вложения $j: C(\overline\Omega) \to L^2(\Omega)$,
+$x \mapsto x$. Справедливо следствие:
+
+\begin{corollary}
+    \begin{enumerate}
+        \item $jU \in B(L^2(\Omega), L^2(\Omega))$
+        \item $Uj \in B(C(\overline\Omega), C(\overline\Omega))$
+    \end{enumerate}
+\end{corollary}
+\begin{proof}
+    Заметим, что $C(\overline\Omega) \subset L^2(\Omega)$.
+    $$
+    \bigg(\int\limits_\Omega |x(s)|^2 \dif t\bigg)^\frac{1}{2} \leqslant
+    \bigg(\|x\|_{C(\overline\Omega)}^2 \cdot |\Omega|\bigg)^\frac{1}{2} =
+    |\Omega|^\frac{1}{2} \cdot \|x\|_{C(\overline\Omega)}
+    $$
+    Получаем
+    $$
+    \|x\|_{L^2(\Omega)} \leqslant
+    |\Omega|^\frac{1}{2} \cdot \|x\|_{C(\overline\Omega)}
+    $$
+
+    $$
+    \|jx\|_{L^2(\Omega)} = \|x\|_{L^2(\Omega)} \leqslant
+    C \cdot \|x\|_{C(\overline\Omega)}
+    $$
+    То есть $j$ непрерывен.
+    $$
+    C(\overline\Omega) \hookrightarrow L^2(\Omega) \overto{U} C(\overline\Omega) \
+    \hookrightarrow L^2(\Omega)
+    $$
+\end{proof}
+
+\subsection{Операторы со слабой особенностью}
+
+Рассмотрим оператор $Ux(t) = \int\limits_\Omega K(s, t) x(s) \dif s$, причём $K$ —
+ядро со слабой особенностью, а $\Omega \subset \real^m$.
+
+\begin{definition}
+    $K$ — ядро со слабой особенностью, если оно представляется в виде:
+    $$
+    K(s, t) = \frac{A(s, t)}{|s - t|^\alpha}
+    $$
+    Здесь $A \in C(\overline\Omega \times \overline\Omega)$, $\alpha < m$
+\end{definition}
+\begin{example}
+    $\Omega = (0, 1)$, $K(s, t) = \frac{1}{\sqrt{|s - t|}}$
+\end{example}
+\begin{remark}
+    Предположим, что $K(s, t) = \frac{a(s, t)}{|s - t|^\alpha}$, $\alpha < m$,
+    $a$ — ограниченная функция, непрерывная вне диагонали множества
+    $\overline\Omega \times \overline\Omega$, то есть в точках $(s, t)$ таких,
+    что $s \neq t$. Тогда $K$ — ядро со слабой особенностью. Почему? Можно
+    записать $K(s, t) = \frac{a(s, t)|s-t|^\delta}{|s-t|^{\alpha + \delta}}$, где
+    $\alpha + \delta < m$. $A(s, t) = a(s, t)|s-t|^\delta$ непрерывно на
+    $\overline\Omega \times \overline\Omega$
+\end{remark}
+
+Почему особенность <<слабая>>? Чтобы ответить на этот вопрос, сформулируем лемму.
+
+\begin{lemma}
+    Пусть у нас есть шар $B(0, \rho) \subset \real^m$. Тогда
+    $\int\limits_{B(0, \rho)} \frac{\dif x}{|x|^\alpha}$ конечен тогда и только 
+    тогда, когда $\alpha < m$.
+\end{lemma}
+\begin{proof}
+    Вычислим этот интеграл.
+    $$
+    \int\limits_{B(0, \rho)} \frac{\dif x}{|x|^\alpha} =
+    \int\limits_0^\rho \int\limits_{S_1(0)}
+    r^{m-1}\frac{1}{r^\alpha}\dif \theta \dif r =
+    |S_1| \int\limits_0^\rho r^{m - \alpha - 1} \dif r =
+    |S_1| \frac{r^{m - \alpha}}{m - \alpha}\bigg|_0^\rho =
+    |S_1|\frac{\rho^{m - \alpha}}{m - \alpha}
+    $$
+\end{proof}
+\begin{theorem}
+    Пусть $U$ — оператор со слабой особенностью:
+    $Ux(t) = \int\limits_\Omega K(s,t) x(s) \dif s$, $\Omega \subset \real^m$.
+    Тогда $U\in B(L^2(\Omega), L^2(\Omega))$.
+\end{theorem}
+\begin{proof}
+    Применим тест Шура. Возьмём функцию $\varphi(s) \equiv 1$.
+    $$
+    \int\limits_\Omega|K(s, t)|\dif s =
+    \int\limits_\Omega \frac{|A(s,t)|}{|s-t|^\alpha}\dif s \leqslant
+    M\cdot \int\limits_\Omega \frac{1}{|s-t|^\alpha}\dif s \leqslant
+    M\cdot \int\limits_{B_d(t)} \frac{\dif s}{|s - t|^\alpha} \leqslant
+    M \cdot \int\limits_{B_d(0)} \frac{\dif z}{|z|^\alpha} \leqslant
+    $$
+    $$
+    \leqslant M \cdot \frac{d^{m - \alpha}}{m - \alpha}
+    $$
+    Здесь $A \in C(\overline\Omega \times \overline\Omega)$,
+    $\|A\|_{C(\overline\Omega \times \overline\Omega)} = M$,
+    $d = \diam \overline\Omega$
+    
+    Получаем, что $\psi(t) = 1$.
+\end{proof}
+\begin{theorem}
+    В условиях предыдущей теоремы также верно
+    $U \in B(C(\overline\Omega), C(\overline\Omega))$.
+\end{theorem}
+\begin{proof}
+    \begin{enumerate}
+        \item $x \in C(\overline\Omega) \implies Ux \in C(\overline\Omega)$
+        \item $\|Ux\|_{C(\overline\Omega)} \leqslant C \|x\|_{C(\overline\Omega)}$
+        $$
+        |(Ux)(t)| = \bigg|\int\limits_\Omega
+        \frac{A(s,t)}{|s,t|^\alpha}x(s)\dif s\bigg| \leqslant M\cdot \|x\|
+        \int\limits_\Omega \frac{\dif s}{|s - t|^\alpha} \leqslant
+        \frac{Md^{m - a}}{m - \alpha}\|x\|.
+        $$
+    \end{enumerate}
+\end{proof}
 
 \end{document}
