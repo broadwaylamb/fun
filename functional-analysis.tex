@@ -56,6 +56,7 @@
 \newcommand{\overto}[1]{\xrightarrow{#1}}
 \newcommand{\dif}{\, \mathrm d}
 \newcommand{\bigslant}[2]{{\raisebox{.2em}{$#1$}\left/\raisebox{-.2em}{$#2$}\right.}}
+\newcommand\ol{\overline}
 \DeclareMathOperator{\Ree}{Re}
 \DeclareMathOperator{\Img}{Im}
 \DeclareMathOperator{\Arg}{Arg}
@@ -1254,7 +1255,7 @@ $x \mapsto x$. Справедливо следствие:
 \subsection{Операторы со слабой особенностью}
 
 Рассмотрим оператор $Ux(t) = \int\limits_\Omega K(s, t) x(s) \dif s$, причём $K$ —
-ядро со слабой особенностью, а $\Omega \subset \real^m$.
+ядро со слабой особенностью, а $\Omega \subset \real^m$ — ограниченная область.
 
 \begin{definition}
     $K$ — ядро со слабой особенностью, если оно представляется в виде:
@@ -1323,15 +1324,229 @@ $x \mapsto x$. Справедливо следствие:
 \end{theorem}
 \begin{proof}
     \begin{enumerate}
-        \item $x \in C(\overline\Omega) \implies Ux \in C(\overline\Omega)$
+        \item $\forall x \in C(\overline\Omega)$
+        $Ux \in C(\overline\Omega)$
         \item $\|Ux\|_{C(\overline\Omega)} \leqslant C \|x\|_{C(\overline\Omega)}$
+        
+        Будем доказывать, что $\forall \varepsilon > 0$ $\exists \delta > 0$
+        такое, что $\forall t_1, t_2 \in \overline\Omega$ такого, что
+        $|t_1 - t_2| < \delta$, $|Ux(t_1) - Ux(t_2)| < \varepsilon$
         $$
-        |(Ux)(t)| = \bigg|\int\limits_\Omega
-        \frac{A(s,t)}{|s,t|^\alpha}x(s)\dif s\bigg| \leqslant M\cdot \|x\|
-        \int\limits_\Omega \frac{\dif s}{|s - t|^\alpha} \leqslant
-        \frac{Md^{m - a}}{m - \alpha}\|x\|.
+        Ux(t_1) - Ux(t_2) = \int\limits_\Omega(K(s, t_1) - K(s, t_2))x(s)\dif s
+        $$
+        Возьмём $\rho$ такое, что $|t_1 - t_2| < \rho$.
+        Разобьём область $\Omega$ на три части:
+        $$
+        \Omega = \underbrace{(\Omega \backslash (B_{\frac{\rho}{2}}(t_1)
+        \cup B_{\frac{\rho}{2}}(t_2))}_{\Omega_{1,2}}
+        \cup \underbrace{(B_{\frac{\rho}{2}}(t_1) \cap \Omega)}_{\Omega_1} \cup
+        \underbrace{(B_{\frac{\rho}{2}}(t_2) \cap \Omega)}_{\Omega_2}
+        $$
+        $$
+        \bigg|\int\limits_{\Omega_1}\ldots\bigg| \leqslant
+        \int\limits_{\Omega_1} |K(s, t_1) - K(s, t_2)||x(s)|\dif s \leqslant
+        \|x\|_{C(\overline\Omega}\bigg(\int\limits_{\Omega_1}|K(s, t_1)|\dif s +
+        \int\limits_{\Omega_1}|K(s, t_2)\dif s \leqslant
+        $$
+        $$
+        \leqslant M \cdot \|x\|\bigg(\int\limits_{\Omega_1}
+        \frac{\dif s}{|s - t_1|^\alpha} + \int\limits_{\Omega_1}
+        \frac{\dif s}{|s - t_2|^\alpha}\bigg) \leqslant
+        M \cdot \|x\|\cdot |S_1|
+        \bigg(\frac{(\frac{\rho}{2})^{m - \alpha}}{m - \alpha} +
+        \frac{(\frac{3\rho}{2})^{m - \alpha}}{m - \alpha}\bigg) < 
+        \frac{\varepsilon}{2}
+        $$
+        $$
+        \bigg|\int\limits_{\Omega_{1,2}}\ldots\bigg| \leqslant
+        \|x\| \int\limits_{\Omega_{1,2}}\bigg|\frac{A(s, t_1)}{|s - t_1|^\alpha} -
+        \frac{A(s, t_2)}{|s - t_2|^\alpha}\bigg|\dif s =
+        $$
+        $$
+        = \|x\| \int\limits_{\Omega_{1,2}} \bigg|
+        \frac{A(s, t_1)|s - t_2|^\alpha - A(s, t_2)|s - t_1|^\alpha}
+        {|s - t_1|^\alpha|s - t_2|^\alpha}\bigg| \dif s \leqslant
+        $$
+        $$
+        \leqslant
+        \frac{\|x\|}{(\frac{\rho}{2})^{2\alpha}}
+        \underbrace{\int\limits_\Omega |A(s, t_1)|s - t_2|^\alpha -
+        A(s, t_2)|s - t_1|^\alpha \dif s}_{\underto{t_1 - t_2 \to 0} 0}
+        $$
+        
+        \ldots (пропущено полдоски)
+        
+        $$
+        \widetilde\varepsilon = \|x\|^{-1}\Big(\frac{\rho}{2}\Big)^{2\alpha}
+        |\Omega|^{-1}
+        \frac{\varepsilon}{2}
+        $$
+        Отсюда находим $\widetilde\delta$.
+        В результате $\delta = \frac{\widetilde\delta}{\sqrt{2}}$.
+    \end{enumerate}
+\end{proof}
+
+\section{Скалярное произведение}
+
+Пусть $X$ — линейное множество над полем скаляров $\real$($\complex$).
+
+\begin{definition}
+    $\varphi: X \times X \to \real(\complex)$ называется скалярным произведением,
+    если:
+    \begin{enumerate}
+        \item $\varphi(x_1 + x_2, y) = \varphi(x_1, y) + \varphi(x_2, y)$
+        \item $\varphi(\lambda x, y) = \lambda \varphi(x, y)$
+        \item $\varphi(x, y) = \ol{\varphi(y, x)}$
+        \item $\varphi(x, x) \geqslant 0$ $\forall x \in X$,
+        $\varphi(x, x) = 0 \iff x = 0$
+    \end{enumerate}
+\end{definition}
+
+\begin{proposition}[Свойства скалярного произведения]
+\mbox{}
+    \begin{enumerate}
+        \item $\varphi\Big(\sum\limits_{j = 1}^n \lambda_jx_j, y\Big) =
+        \sum\limits_{j=1}^n \lambda_j\varphi(x_j, y)$
+        \item\label{scalar_product_halflinearity}
+        $\varphi\Big(x, \sum\limits_{j = 1}^n \lambda_jy_j\Big) =
+        \sum\limits_{j=1}^n \ol{\lambda_j}\varphi(x, y_j)$
+        \item Неравенство Коши-Буняковского:
+        $|\varphi(x, y)|^2 \leqslant \varphi(x, x)\varphi(y, y)$
+        \item\label{scalar_product_norm} $p(x) = \sqrt{\varphi(x, x)}$
+        является нормой.
+    \end{enumerate}
+\end{proposition}
+\begin{proof}
+    Докажем свойство \ref{scalar_product_halflinearity}.
+    $$
+    \varphi(x, \sum\limits_{j=1}^n \lambda_j y_j) =
+    \ol{\varphi(\sum\limits_{j=1}^n \lambda_j y_j, x)} =
+    \ol{\sum\limits_{j=1}^n\lambda_j \varphi(y_j, x)} =
+    \sum\limits_{j=1}^n \ol{\lambda_j}\varphi(x, y_j)
+    $$
+    
+    Докажем неравенство Коши-Буняковского. Возьмём какой-нибудь скаляр $\lambda$.
+    $$
+    0 \leqslant \varphi(x + \lambda y, x + \lambda y) = \varphi(x, x) +
+    \varphi(x, \lambda y) + \varphi(\lambda y, x) +
+    \varphi(\lambda y, \lambda y) =
+    $$
+    $$
+    = \varphi(x, x) + \ol\lambda\varphi(x, y) +
+    \underbrace{\lambda(y, x)}_{\lambda\ol{\varphi(x, y)}} +
+    \underbrace{\lambda\ol\lambda\varphi(y, y)}_{|\lambda|^2\varphi(y, y)}
+    $$
+    Выберем $\lambda$ следующим образом:
+    $\lambda = t\varphi(x, y)$ ($t \in \real)$. Тогда получим:
+    $$
+    = \varphi(x, x) + 2t|\varphi(x, y)|^2 + t^2|\varphi(x, y)|^2\varphi(y, y)
+    $$
+    Дискриминант этого трёхчлена $D = 4|\varphi(x, y)|^4 -
+    |\varphi(x, y)|^2 \varphi(x, x)\varphi(y, y) \leqslant 0$. Отсюда следует,
+    что $|\varphi(x, y)|^2 \leqslant \varphi(x, x)\varphi(y, y)$.
+    
+    В свойстве \ref{scalar_product_norm} проверим аксиомы нормы:
+    \begin{enumerate}
+        \item $p(x) \geqslant 0$, $p(x) = 0 \iff x = 0$
+        \item $p(\lambda x) = \sqrt{\varphi(\lambda x, \lambda x)} =
+        \sqrt{\lambda\ol\lambda\varphi(x, x)} = |\lambda|\sqrt{\varphi(x, x)} =
+        |\lambda|p(x)$
+        \item Требуется $p(x + y) \leqslant p(x) + p(y)$.
+        $$
+        \sqrt{(\varphi(x + y, x + y)} \leqslant \sqrt{\varphi(x, x)} +
+        \sqrt{(\varphi(y, y)} \iff
+        $$
+        $$
+        \iff \varphi(x + y, x + y) \leqslant \varphi(x, x) +
+        2\sqrt{\varphi(x, x)\varphi(y, y)} + \varphi(y, y) \iff
+        $$
+        $$
+        \iff \underbrace{\varphi(x, y) + \varphi(y, x)}_{2\Ree\varphi(x, y)}
+        \leqslant 2\sqrt{\varphi(x, x)\varphi(y, y)}
+        $$
+        $$
+        2\Ree \varphi(x, y) \leqslant 2|\varphi(x, y)| \leqslant
+        2\sqrt{\varphi(x, x) \varphi(y, y)}
         $$
     \end{enumerate}
 \end{proof}
+\begin{remark}
+    В пространстве со скалярным произведением можно естественным образом завести 
+    норму.
+\end{remark}
+
+\begin{definition}
+    Пространство со скалярным произведением $(X, \varphi)$ называется унитарным.
+    Полное унитарное пространство называется гильбертовым (обозначается $H$).
+\end{definition}
+
+\begin{proposition}[Непрерывность скалярного произведения]
+    Если  $x_n \to x$, $y_n \to y$, то $(x_n, y_n) \to (x, y)$.
+\end{proposition}
+\begin{proof}
+    $$
+    |(x_n, y_n) - (x, y)| = |(x_n, y_n) - (x_n, y) + (x_n, y) - (x, y)| \leqslant
+    |(x_n, y_n - y)| + |(x_n - x, y)| \leqslant
+    $$
+    $$
+    \leqslant \|x_n\| \cdot \|y_n - y\| + \|x_n - x\|\cdot \|y\| \to 0
+    $$
+\end{proof}
+
+\begin{proposition}
+    Пусть $\sum\limits_{j=1}^\infty x_j$ — сходящийся ряд в $H$ — гильбертовом
+    пространстве. Тогда $\bigg(\sum\limits_{j=1}^\infty x_j, y\bigg) =
+    \sum\limits_{j=1}^\infty (x_j, y)$.
+\end{proposition}
+\begin{proof}
+    Пусть $S_n = \sum\limits_{j=1}^n x_j$, $S_n \to S$. Тогда
+    $(S_n, y) \to (S, y) = \bigg(\sum\limits_{j=1}^\infty x_j, y\bigg)$.
+    $$
+    (S_n, y) = \bigg(\sum\limits_{j=1}^n x_j, y\bigg) =
+    \sum\limits_{j=1}^n(x_j, y) \to
+    \sum\limits_{j=1}^\infty(x_j, y)
+    $$
+\end{proof}
+
+\begin{proposition}[Тождество параллелограмма]
+    $\|x + y\|^2 + \|x - y\|^2 = 2(\|x\|^2 + \|y\|^2)$
+\end{proposition}
+\begin{proof}
+    Упражнение
+\end{proof}
+
+\begin{example}
+    Рассмотрим пространство $X = C[0, 1]$, функции $x(t) = 1$ и $y(t) = t$.
+    $\|x + y\| = 2$, $\|x - y\| = 1$, $\|x\| = 1$, $\|y\| = 1$. Отсюда
+    $2^2 + 1^2 = 2\cdot (1^2 + 1^2)$ — неверно. Из этого следует, что в 
+    пространстве $C[0, 1]$ нельзя ввести скалярное произведение, согласованное
+    с естественной нормой.
+\end{example}
+
+\begin{proposition}[Формула восстановления]
+    Если пространство унитарное, то в нём можно восстановить скалярное 
+    произведение по норме. Для вещественного случая:
+    $$
+    (x, y) = \frac{1}{4}(\|x + y\|^2 - \|x - y\|^2)
+    $$
+    Для комплексного случая:
+    $$
+    (x, y) = \frac{1}{4}(\|x + y\|^2 - \|x - y\|^2 + i\|x + y\|^2 - i\|x - y\|^2)
+    $$
+\end{proposition}
+\begin{proof}
+    Упражнение.
+\end{proof}
+
+\begin{example}
+    В пространстве $L^2(T, \mu)$:
+    $$
+    (x, y) = \int\limits_T x(t)\ol{y(t)}\dif \mu(t)
+    $$
+    $$
+    \sqrt{(x, x)} = \bigg(\int\limits_T |x(t)|^2\dif \mu(t)\bigg)^\frac{1}{2} =
+    \|x\|_2
+    $$
+\end{example}
 
 \end{document}
