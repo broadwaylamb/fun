@@ -67,6 +67,7 @@
 \DeclareMathOperator{\Ker}{Ker}
 \DeclareMathOperator{\sign}{sign}
 \DeclareMathOperator{\diam}{diam}
+\DeclareMathOperator{\Lin}{Lin}
 
 \begin{document}
 
@@ -1548,5 +1549,193 @@ $x \mapsto x$. Справедливо следствие:
     \|x\|_2
     $$
 \end{example}
+
+\section{Ортогональность}
+
+\begin{definition}
+    Пусть $H$ — гильбертово пространство. Векторы $x, y$ ортогональны, если
+    $(x, y) = 0$.
+\end{definition}
+
+\begin{proposition}
+    \begin{enumerate}
+        \item $x \perp x \iff x \perp H \iff x = 0$.
+        \item $x \perp y_1, y_2 \implies x \perp (\alpha_1y_1 + \alpha_2y_2)$.
+        \item $x \perp y_n$ $\forall n \in \mb N$, $y_n \to y$ $\implies
+        x \perp y$.
+        \item $x \perp A \implies x \perp \ol{\Lin(A)}$.
+        \item (Теорема Пифагора) Если для $x_1, \ldots, x_n$ $x_j \perp x_k$
+        $\forall j \neq k$, то $\|x_1 + \ldots + x_n\|^2 =
+        \|x_1\|^2 + \ldots + \|x_n\|^2$.
+    \end{enumerate}
+\end{proposition}
+
+\begin{definition}
+    Ряд $\sum\limits_{j=1}^\infty x_j$ в гильбертовом пространстве $H$ называется
+    ортогональным, если $\forall j\neq k$ $x_j \perp x_k$.
+\end{definition}
+
+\begin{theorem}[О сходимости ортогонального ряда]
+    Рассмотрим ортогональный ряд (1) $\sum\limits_{j=1}^\infty x_j$ и ряд (2)
+    $\sum\limits_{j=1}^\infty \|x_j\|^2$. Ряд (1) сходится тогда и только тогда,
+    когда ряд (2) сходится. В случае сходимости выполняется теорема Пифагора
+    $\|\sum\limits_{j=1}^\infty x_j\| = \sum\limits_{j=1}^\infty \|x_j\|$.
+\end{theorem}
+\begin{proof}
+    Обозначим $S_n = \sum\limits_{j=1}^nx_j$,
+    $C_n = \sum\limits_{j=1}^n\|x_j\|^2$. Возьмём $m > n$ и воспользуемся 
+    критерием Коши.
+    $$
+    \|S_m - S_n\|^2 = \|\sum\limits_{j=n+1}^m x_j\|^2 =
+    \sum\limits_{j=n+1}^m \|x_j\| = C_m - C_n = |C_n - C_n|
+    $$
+    Таким образом, фундаментальность последовательности $S_n$ равносильна
+    $\|S_m - S_n\| \underto{m,n \to \infty} 0 \iff \|C_m - C_n\|
+    \underto{m,n \to \infty} 0$, что равносильно фундаментальности $C_n$.
+    Получаем $\|S_n\|^2 = C_n$.
+\end{proof}
+
+\begin{example}[Ряд Фурье]
+    $b_0 + \sum\limits_{n \in \mb N}a_n\sin nt + b_n \cos nt$ в пространстве
+    $L^2(0, 2\pi)$.
+    $$
+    \|a_n \sin nt\|_2^2 = |a_n|^2\int\limits_0^{2\pi}|\sin nt|^2\dif t =
+    |a_n|^2\pi
+    $$
+    $$
+    \|b_n\cos nt\|^2 = |b_n|^2 \pi
+    $$
+    $$
+    \|b_0\|^2 = b_0^2\cdot 2\pi
+    $$
+    Чтобы ряд сходился в $L^2(0, 2\pi)$, необходимо и достаточно, чтобы 
+    выполнялось $\pi\sum\limits_{n=1}^\infty(|a_n|^2 + |b_n|^2) < \infty$.
+\end{example}
+\begin{exercise}
+    Доказать, что:
+    \begin{enumerate}
+        \item $\int\limits_0^{2\pi} \cos mt\sin nt \dif t = 0$;
+        \item $\int\limits_0^{2\pi} \sin mt\sin nt \dif t = 0$ при $m \neq t$.
+    \end{enumerate}
+\end{exercise}
+
+\begin{example}
+    $\sum\limits_{n \in \mb Z} a_n e^{int}$ в $L^2(0, 2\pi)$.
+    $$
+    (e^{int}, e^{imt}) = \int\limits_0^{2\pi}e^{int}\ol{e^{imt}}\dif t =
+     \int\limits_0^{2\pi} e^{i(n - m)t}\dif t =
+     \begin{cases}
+         2\pi,\quad n = m \\
+         \frac{e^{i(n-m)t}}{i(n-m)}\bigg|_0^{2\pi},\quad n \neq m \\
+     \end{cases} =
+     \begin{cases}
+         2\pi,\quad n = m \\
+         0,\quad n \neq m \\
+     \end{cases}
+    $$
+\end{example}
+
+\section{Теорема о наилучшем приближении}
+
+\begin{example}
+    Допустим, мы рассматриваем пространство $C[-1, 1]$. Возьмём в этом
+    пространстве функцию $x_0(t) = t^n$ и множество
+    $A = \Lin\{1, t, t^2, \ldots, t^{n-1}\}$ многочленов степени не выше $n-1$.
+    Мы хотим найти $\dist(x_0, A) = \inf_{y\in A}\|x_0 - y\|_{C[-1, 1]}$. 
+    Необходимо ответить на ряд вопросов: существует ли минимум? единственен ли он?
+    как его искать?
+\end{example}
+
+\begin{definition}
+    $y_0$ называется наилучшим приближением к $x_0$ в $A$, если
+    $\dist(x_0, A) = \|x_0 - y_0\|$ и $y_0 \in A$.
+\end{definition}
+
+\begin{theorem}[О наилучшем приближении]
+    Пусть $H$ — гильбертово пространство, $A \subset H$ — замкнутое и выпуклое 
+    множество, $x_0 \in H$. Тогда существует и единственно наилучшее
+    приближение к $x_0$ в $A$.
+\end{theorem}
+\begin{proof}
+    Начнём с единственности. Предположим, что есть две точки $y_1, y_2 \in A$.
+    Может ли так случиться, что они обе минимизируют расстояние до $x_0$? Заметим,
+    что любая точка на интервале $y_1y_2$ будет ближе к $x_0$, чем $y_1$ и $y_2$.
+    Возьмём векторы $u = x_0 - y_1$ и $v = x_0 - y_2$. По тождеству 
+    параллелограмма $\|u + v\|^2 + \|u - v\|^2 = 2(\|u\|^2 + \|v\|^2)$, откуда:
+    $$
+    \underbrace{\|2x_0 - (y_1 + y_2)\|^2}_{(\ast)} + \|y_1 - y_2\|^2 =
+    2(\|x_0 - y_1\|^2 + \|x_0 - y_2\|^2)
+    $$
+    Обозначим $\dist(x_0, A) = d$.
+    $$
+    (\ast) = 4\|x_0 - \frac{y_1 + y_2}{2}\|^2 \geqslant 4d^2
+    $$
+    Итого, получаем:
+    $$
+    \|y_1 - y_2\|^2 \leqslant 2(\|x_0 - y\|^2 + \|x_0 - y_2\|^2) - 4d^2
+    \quad \forall y_1, y_2 \in A
+    $$
+    Таким образом, если $y_1, y_2$ — наилучшие приближения, то $\|x_0 - y_1\| = d$
+    и $\|x_0 - y_2\| = d$, то $\|y_1 - y_2\|^2 \leqslant 0$, отсюда $y_1 = y_2$.
+    Единственность доказана.
+    
+    Докажем существование. Возьмём последовательность $y_n \in A$ такую, что
+    $\|x_0 - y_n\| \to d$ ($y_n$ — \emph{минимизирующая последовательность}).
+    $$
+    \|y_n - y_m\|^2 \leqslant 2(\underbrace{\|x_0 - y_n\|^2}_{\to d^2} +
+    \underbrace{\|x_0 - y_m\|^2}_{\to d^2}) - 4d^2 \to 0
+    $$
+    Из этого следует, что $\|y_n - y_m\| \underto{m,n \to \infty} 0 \implies
+    \exists y_0 = \lim y_n \in A$. $\|x_0 - y_0\| = d$. Существование доказано.
+\end{proof}
+
+\begin{theorem}[О проекции]
+    Пусть $H$ — гильбертово пространство, $L \subset H$ — линейное замкнутое 
+    подмножество $H$. Тогда для любого $x \in H$ существует единственная пара
+    элементов $y \in L$, $z \perp L$ таких, что $x = y + z$.
+\end{theorem}
+\begin{definition}
+    $y$ называется \emph{проекцией} вектора $x$ на $L$.
+\end{definition}
+\begin{proof}[Доказательство теоремы]
+    Так как $L$ линейно, то оно выпукло. Значит, существует наилучшее приближение
+    $y \in L$ для $x$. Определеним $z$ как $x - y$. Проверим, что $z \perp L$.
+    Возьмём произвольный вектор $l \in L$, скаляр $\lambda$. Будем рассматривать
+    вектор $y + \lambda l$. Очевидно, что
+    $\|y + \lambda l - x\|^2 \geqslant \|y - x\|^2$, то есть
+    $\|\lambda l - z\|^2 \geqslant \|z\|^2$. Раскроем скобки в скалярных 
+    квадратах:
+    $$
+    (\lambda l, \lambda l) - (\lambda l, z) - (z, \lambda l) + (z, z) \geqslant 
+    (z, z)
+    $$
+    $$
+    |\lambda|^2(l, l) - \lambda(l, z) - \ol\lambda(z, l) \geqslant 0\quad
+    \forall \lambda \in \complex
+    $$
+    Пусть $\lambda = t(z, l)$ ($t \in \real$). Тогда
+    $$
+    t^2|(z, l)|^2(l, l) - 2t|(z, l)|^2 \geqslant 0
+    $$
+    $$
+    |(z, l)|^2(t^2\|l\|^2 - 2t)\geqslant 0
+    $$
+    Заметим, что в этом выражении скобка имеет отрицательное значение, из чего
+    следует, что $(z, l) = 0$. Существование доказано.
+    
+    Докажем единственность. Пусть существует два разложения:
+    $x = y_1 + z_1 = y_2 + z_2$ и $y_1,y_2\in L$, $z_1,z_2 \perp L$.
+    Рассмотрим $w = y_1 - y_2 = z_2 - z_1$. Но $y_1 - y_2 \in L$, а
+    $z_2 - z_1 \perp L$, значит, $w \perp w \implies w = 0$.
+\end{proof}
+
+\begin{corollary}
+    $\|x\| \geqslant \|y\|$ и $\|x\| \geqslant \|z\| = \dist(x, L)$.
+\end{corollary}
+\begin{proof}
+    $$
+    \|x\|^2 = \|y + z\|^2 = \|y\|^2 + \|z\|^2
+    $$
+\end{proof}
 
 \end{document}
