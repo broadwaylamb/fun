@@ -13,6 +13,8 @@
 \renewcommand{\bfdefault}{sbc}
 \usepackage{ccfonts,eulervm,microtype}
 \usepackage{enumitem}
+\usepackage[makeroom]{cancel}
+
 \usepackage{tikz}
 \usetikzlibrary{arrows}
 \usetikzlibrary{calc}
@@ -1576,6 +1578,7 @@ $x \mapsto x$. Справедливо следствие:
 \end{definition}
 
 \begin{theorem}[О сходимости ортогонального ряда]
+\label{orthogonal_series_convergence}
     Рассмотрим ортогональный ряд (1) $\sum\limits_{j=1}^\infty x_j$ и ряд (2)
     $\sum\limits_{j=1}^\infty \|x_j\|^2$. Ряд (1) сходится тогда и только тогда,
     когда ряд (2) сходится. В случае сходимости выполняется теорема Пифагора
@@ -1736,6 +1739,368 @@ $x \mapsto x$. Справедливо следствие:
     $$
     \|x\|^2 = \|y + z\|^2 = \|y\|^2 + \|z\|^2
     $$
+\end{proof}
+
+\section{Ортогональное дополнение и ортогональные проекторы}
+
+В этом параграфе рассматриваем гильбертово пространство $H$.
+
+\begin{definition}
+    Если $A \subset H$, то его ортогональным дополнением называется
+    $A^\perp = \{x \in H:\,\forall y \in A\quad x\perp y\}$.
+\end{definition}
+\begin{proposition}[Свойства ортогонального дополнения]
+\mbox{}
+    \begin{enumerate}
+        \item $A^\perp$ — линейное.
+        \item $A^\perp$ — замкнутое множество, то есть если $x_n \in A^\perp$,
+        $x_n \to x$, то $x \in A^\perp$.
+        \item $(\Lin A)^\perp = A^\perp$.
+        \item $(\ol A)^\perp = A^\perp$.
+        \item $(\ol{\Lin A})^\perp = A^\perp$.
+        \item $A\subset B \implies A^\perp \supset B^\perp$.
+        \item $\{0\}^\perp = H$, $H^\perp = \{0\}$.
+        \item\label{closed_perp_addition} Если $L$ — линейное подмножество $H$,
+        то $(L^\perp)^\perp = \ol L$.
+    \end{enumerate}
+\end{proposition}
+\begin{proof}
+    Докажем свойство \ref{closed_perp_addition}. Пусть $L = \ol L$. Тогда
+    $(L^\perp)^\perp = \{x \in H:\, x\perp L^\perp\} \supset L$.
+    Предположим, что
+    $(L^\perp)^\perp \neq L$, $x \in (L^\perp)^\perp \backslash L$.
+    По теореме о проекции $x$ представляется в виде $x = y + z$, где
+    $y \in L \subset (L^\perp)^\perp$,
+    $z \in L^\perp$. Тогда
+    $\underbrace{x - y}_{\in (L^\perp)^\perp} = z \in L^\perp$. Это означает,
+    что $x-y \perp Z$, откуда $z = x - y = 0$, то есть $x = y \in L$ — 
+    противоречие. Значит, в случае замкнутого $L$ его второе ортогональное 
+    дополнение совпадает с ним самим. Рассмотрим случай, когда $L$ незамнкуто.
+    $L^\perp = (\ol L)^\perp$, $(L\perp)^\perp = ((\ol L)^\perp)^\perp = \ol L$.
+\end{proof}
+
+\begin{definition}
+    Пусть $L \subset H$ — замкнутое линейное множество и для всех $x \in H$
+    существует единственные $y, z$ такие, что $y \in L$, $z \in L^\perp$,
+    $x = y + z$. Отображение $P_L: H \to H$, $x \mapsto y$
+    называется ортогональным проектором.
+\end{definition}
+
+\begin{proposition}[Свойства ортогонального проектора]
+    \begin{enumerate}
+        \item $P_L$ — линейное отображение.
+        \item $P_L \in B(H, H)$, т. е. $P_L$ непрерывно.
+    \end{enumerate}
+\end{proposition}
+\begin{proof}
+    \begin{enumerate}
+        \item 
+        \item Проверим, что $\|P_Lx\| \leqslant C\|x\|$. Предствавим $x$ в виде
+        $x = y + z$, где $y \in L$, $z \in L^\perp$. Отсюда
+        $\|x\|^2 = \|y\|^2 + \|z\|^2 \implies \|y\| \leqslant \|x\|$. То есть,
+        $\|P_Lx\| \leqslant \|x\| \implies \|P_L\| \leqslant 1$.
+        \item $\Ker P_L = L^\perp$.
+        \item $P_L(H) = L$.
+        \item $P_L + P_{L^\perp} = I$
+    \end{enumerate}
+\end{proof}
+\begin{remark}
+    Если $L \neq \{0\}$, то $\|P_L\| = 1$ (так как $\forall x \in L P_Lx = x$.
+\end{remark}
+
+\begin{theorem}[О характеристике ортогональных проекторов]
+    Пусть $U \in B(H, H)$. Чтобы $U$ был ортогональным проектором,
+    необходимо и достаточно, чтобы выполнялись условия:
+    \begin{enumerate}
+        \item $U^2 = U$ (идемпотентность).
+        \item $\forall x_1, x_2 \in H$ $(Ux_1, x_2) = (x_1, Ux_2)$
+        (самосопряжённость).
+    \end{enumerate}
+\end{theorem}
+\begin{proof}
+    Предположим, что $U = P_L$. Проверим идемпотентность.
+    Если $x = y + z$, где $y \in L$, $z \in L^\perp$, то $P_Lx = y$, $P_Ly = y$.
+    Проверим самосопряжённость. Пусть $x_1 = y_1 + z_1$, $x_2 = y_2 + z_2$
+    ($y_j \in L$, $z_j \in L^\perp$). $P_Lx_j = y_j$.
+    $(y_1, y_2 + z_2) = (y_1, y_2) = (y_1 + z_1, y_2)$.
+    
+    Обратно. Положим $L = \{x\in H:\, Ux=x\} = \Ker(U-I)$. Ясно, что $L$ — 
+    линейное замкнутое множество (ядро непрерывного оператора всегда 
+    замкнуто). Проверим, что $\forall x\in H$ $Ux \in L$, то есть $U(Ux) = Ux$.
+    Ясно, что это выполнено. Далее, представим $x$ в виде
+    $x = \underbrace{Ux}_{\in L} + (x - Ux)$. Нужно доказать, что
+    $x - Ux \in L^\perp$. Возьмём произвольное $y \in L$. Посчитаем скалярное 
+    произведение $(x - Ux, y) = (x, y) - (Ux, y) = (x, y) - (x, Uy) =
+    (x, y) - (x, y) = 0$.
+\end{proof}
+
+\section{Ряды Фурье}
+
+\begin{definition}\label{orthogonal_system}
+    Пусть $H$ — гильбертово пространство. Система векторов
+    $\{e_\alpha\}_{\alpha \in A} \subset H$ ($A$ — некоторое множество индексов)
+    называется ортогональной, если $e_\alpha \neq 0 \forall \alpha \in A$ и
+    $(e_{\alpha_1}, _{\alpha_2}) = 0$, если $\alpha_1 \neq \alpha_2$. Система
+    векторов называется ортонормированной, если она ортогональна и норма каждого
+    вектора системы равна единице.
+\end{definition}
+
+\begin{remark}
+    Чаще всего множество $A$ из определения \ref{orthogonal_system} является
+    множеством натуральных или целых чисел, но мы будем перенумеровывать индексы 
+    так, чтобы рассматривать множество натуральных чисел.
+\end{remark}
+
+\begin{proposition}
+    Если система $\{e_j\}_{j=1}^\infty$ ортогональна, то она линейно независима.
+\end{proposition}
+\begin{proof}
+    Предположим, что система линейно зависима. Тогда существуют скаляры
+    $\lambda_j$ такие, что $\sum\limits_{j=1}^n \lambda_je_j = 0$. Умножим
+    это равенство скалярно на $e_m$. Получим
+    $\sum\limits_{j=1}^n \lambda_j(e_j, e_m) = 0$. Отсюда
+    $\lambda_m(e_m, e_m) = 0$, но $(e_m, e_m) \neq 0$, значит,
+    $\lambda_m = 0 \forall m$.
+\end{proof}
+
+\begin{proposition}
+    Пусть $\{e_j\}$ — ортогональная система и $x\in H$. Предположим, что $x$ 
+    представимо в виде $x = \sum\limits_{j=1}^\infty \lambda_je_j$. Тогда такое
+    представление единственно.
+\end{proposition}
+\begin{proof}
+    Рассмотрим представление $x = \sum\limits_{j=1}^\infty \lambda_je_j$, умножим 
+    его скалярно на $e_m$.
+    $$
+    (x, e_m) = (\sum\limits_{j=1}^\infty \lambda_je_j, e_m) =
+    \sum\limits_{j=1}^\infty(\lambda_je_j, e_m) = \lambda_m(e_m, e_m)
+    $$
+    Отсюда $\lambda_m = \frac{(x, e_m)}{(e_m, e_m)}$, то есть коэффициент
+    $\lambda_m$ однозначно определяется по $x$.
+\end{proof}
+\begin{remark}
+    Даже если $x$ не представляется в виде ряда, можно вычислить величины
+    $\frac{(x, e_m)}{(e_m, e_m)} = \frac{(x, e_m)}{\|e_m\|^2}$.
+\end{remark}
+\begin{definition}
+    $c_m(x) = \frac{(x, e_m)}{\|e_m\|^2}$ — \emph{коэффициенты Фурье} вектора
+    $x$ по ортогональной системе $\{e_j\}_{j=1}^\infty$.
+    $\sum\limits_{j=1}^\infty c_j(x)$ — ряд Фурье вектора $x$ по этой системе.
+\end{definition}
+
+Возникают естественные вопросы:
+\begin{itemize}
+    \item Для всех ли $x \in H$ ряд Фурье сходится?
+    \item Если ряд Фурье сходится, то сходится ли он к $x$?
+    \item Как определить, к $x$ или не к $x$ он сходится?
+\end{itemize}
+
+\begin{example}\label{fourier_series_bad_example}
+    Пусть $H = \real^3$, $e_1 = (1, 0, 0)$, $e_2 = (0, 1, 0)$. Возьмём вектор
+$x = (x_1, x_2, x_3)$. $c_1(x) = x_1$, $c_2(x) = x_2$. Значит, ряд Фурье $x$ равен
+$x_1e_1 + x_2e_2 = (x_1, x_2, 0)$. Он сходится как конечная сумма, но не к $x$, а
+к его проекции на подпространство, натянутое на $e_1$, $e_2$.
+\end{example}
+
+\begin{theorem}[О частичных суммах ряда Фурье]
+    Пусть у нас есть ортогональная система $\{e_j\}$ в гильбертовом пространстве
+    $H$, есть вектор $x$ и его ряд Фурье $\sum\limits_{j=1}^\infty c_j(x)e_j$.
+    Рассмотрим $S_n(x) = \sum\limits_{j=1}^n c_j(x)e_j$,
+    $L_n = \Lin \{e_1,\ldots,e_n\}$. Тогда:
+    \begin{enumerate}
+        \item $x - S_n(x) \perp L_n$.
+        \item $\|S_n(x)\| \leqslant \|x\|$
+    \end{enumerate}
+\end{theorem}
+\begin{proof}
+    Докажем первое утверждение. Возьмём $m: 1 \leqslant m \leqslant n$.
+    $$
+    (x - S_n(x), e_m) = (x, e_m) - (\sum\limits_{j=1}^n c_j(x)e_j, e_m) =
+    (x, e_m) - c_m(x)(e_m, e_m) = 0
+    $$
+    Докажем второе утверждение. $x = \underbrace{S_n(x)}_{\in L_n} +
+    \underbrace{(x - S_n(x))}_{\perp L_n}$. Отсюда $S_n(x) = P_{L_n}(x)$ и
+    $\|S_n(x)\|\leqslant \|x\|$, $\|x - S_n(x)\| \leqslant \|x\|$.
+\end{proof}
+\begin{corollary}
+\mbox{}
+    \begin{enumerate}
+        \item $\|S_n(x)\|^2 = \|\sum\limits_{j=1}^n c_j(x)e_j\|^2 =
+        \sum\limits_{j=1}^n |c_j(x)|^2 \cdot \|e_j\|^2 \leqslant \|x\|^2$.
+        \item (Неравенство Бесселя)
+        $\sum\limits_{j=1}^\infty |c_j(x)|\cdot \|e_j\|^2 \leqslant \|x\|^2$
+    \end{enumerate}
+\end{corollary}
+
+\begin{theorem}[Риса-Фишера]
+    Пусть $\{e_j\}$ — ортогональная система в $H$ — гильбертовом пространстве,
+    $x \in H$. Тогда:
+    \begin{enumerate}
+        \item Ряд Фурье для $x$ сходится.
+        \item Если $S(x)$ — сумма этого ряда, то $x - S(x) \perp e_j \forall j$.
+        \item $x = S(x) \iff \sum\limits_{j=1}^\infty |c_j(x)|^2\cdot\|e_j\|^2 =
+        \|x\|^2$
+    \end{enumerate}
+\end{theorem}
+\begin{proof}
+    \begin{enumerate}
+        \item Строим ортогональный ряд $\sum\limits_{j=1}^\infty c_j(x)e_j$. По 
+        теореме \ref{orthogonal_series_convergence} этот ряд сходится тогда и 
+        только тогда, когда $\sum\limits_{j=1}^\infty \|c_j(x)e_j\|^2$
+        сходится, то 
+        есть $\sum\limits_{j=1}^\infty |c_j(x)|^2\|e_j\|^2$ сходится, что верно по 
+        неравенству Бесселя.
+        \item $(x - S9x), e_j) = (x, e_j) -
+        (\sum\limits_{k=1}^\infty c_k(x)e_k, e_j) = (x - e_j) - c_j(x)(e_j, e_j) = 
+        0$
+        \item $x = \underbrace{z}_{\in L^\perp} + \underbrace{S(x)}_{\in L}$, где
+        $L = \ol{\Lin\{e_j\}}$. По теореме Пифагора
+        $\|x\|^2 = \|z\|^2 + \|S(x)\|^2$. Отсюда $x = S(x) \iff z = 0 \iff
+        \|x\|^2 = \|S(x)\|^2 = \|\sum\limits_{j=1}^\infty c_j(x) e_j\|^2 =
+        \sum\limits_{j=1}^\infty |c_j(x)|^2\|e_j\|^2$.
+    \end{enumerate}
+\end{proof}
+
+\begin{definition}
+    Рассмотрим ортогональную систему $\{e_j\} \subset H$. Эта система называется
+    \emph{ортогональным базисом} в $H$, если $\forall x \in H$ $S(x) = x$.
+\end{definition}
+
+Возвращаясь к примеру \ref{fourier_series_bad_example}, легко видеть, что 
+выбранная в нём ортогональная система не является базисом.
+
+\begin{definition}
+    Система векторов $A \subset H$ называется \emph{полной}, если из $x \perp A$
+    следует $x = 0$, иначе говоря, $A^\perp = \{0\}$.
+\end{definition}
+
+\begin{definition}
+    Система векторов $A \subset H$ называется \emph{порождающей}, если
+    $\ol{\Lin A} = H$. (Здесь $H$ — не обязательно гильбертово пространство.)
+\end{definition}
+
+\begin{theorem}[О характеристике ортогонального базиса]
+    Пусть $\{e_j\}$ — ортогональная система в $H$ — гильбертово.
+    Тогда следующие утверждения 
+    равносильны:
+    \begin{enumerate}
+        \item $\{e_j\}$ — ортогональный базис.
+        \item $\forall x \in H \|x\|^2 =
+        \sum\limits_{k=1}^\infty |c_j(x)|^2\|e_j\|^2$.
+        \item $\{e_j\}$ — порождающая система.
+        \item $\{e_j\}$ — полная система.
+    \end{enumerate}
+\end{theorem}
+\begin{proof}
+\mbox{}
+    \begin{enumerate}
+        \item ($1 \Leftrightarrow 2$). Утверждается в теореме Риса-Фишера.
+        \item ($1 \Rightarrow 3$). $x = \sum\limits_{j=1}^\infty c_j(x)e_j =
+        \lim\limits_{n \to \infty}
+        \underbrace{\sum\limits_{j=1}^n c_j(x) e_j)}_{\in \Lin \{e_j\}} \in
+        \ol{\Lin\{e_j\}} \implies \ol{\Lin \{e_j\}} = H$.
+        \item ($3 \Rightarrow 4$). $\{e_j\}$ — порождающая система, значит,
+        $\ol{\Lin\{e_j\}} = H$. $\{e_j\}^\perp = (\ol{\Lin\{e_j\}})^\perp =
+        H_\perp = \{0\} \implies \{e_j\}$ — полная.
+        \item ($4 \Rightarrow 1$). $x = z + S(x)$, где $z \perp e_j \forall j$.
+        Это означает, что $z = 0$, так как система полная, и $x = S(x)$.
+    \end{enumerate}
+\end{proof}
+
+\begin{examples}
+\mbox{}
+    \begin{enumerate}
+        \item $\ell^2$. $e_j =
+        (0, 0, \ldots, \underbrace{1}_j, 0, \ldots)$.
+        $\{e_j\}_{j=1}^\infty$ — ортонормированный базис.
+        \item $L^2(0, 2\pi)$.
+        $\{1, \sin t, \cos t, \sin 2t, \cos 2t, \ldots, \ldots\}$ —
+        ортогональный базис. Как доказать, 
+        что это действительно базис? Проще всего в данной ситуации проверить, что
+        рассматриваемая система является порождающей. Для этого надо любую функцию
+        из $L^2(0, 2\pi)$ научиться приближать линейными комбинациями
+        (тригонометрическими многочленами). Таким образом, необходимо доказать, 
+        что любая непрерывная функция приближается тригонометрическими 
+        многочленами и, кроме того, любая функция из $L^2(0, 2\pi)$ приближается
+        непрерывной.
+        \item $L^2(0, 2\pi)$. $\{e^{int}\}_{n \in \mb Z}$ — ортогональный базис.
+        \item $L^2(0, \pi)$. $\{1,\cos t, \cos 2t, \ldots\}$ — ортогональный 
+        базис.
+    \end{enumerate}
+\end{examples}
+
+\begin{definition}
+    Пусть $X$ — нормированное пространство. $X$ сепарабельно, если в нём 
+    существует счётное всюду плотное множество.
+\end{definition}
+\begin{remark}
+    Множество $M$ является всюду плотным в $X$, если $\ol M = X$.
+\end{remark}
+
+\begin{examples}
+\mbox{}
+    \begin{enumerate}
+        \item $C(\ol \Omega)$ — сепарабельное.
+        (Здесь $\Omega \subset \real^n$ — ограниченная область.)
+        В этом случае примером счётного всюду плотного множества служит множество
+        многочленов с рациональными коэффициентами.
+        \item $L^p(\Omega)$ — сепарабельное ($1 \leqslant p < \infty$).
+        \item $\ell^p$ ($1 \leqslant p < \infty$). Пример счётного всюду
+        плотного множества:
+        $M = \{(x_1, x_2,\ldots,x_k, 0, 0, \ldots)\,\big|\,
+        k \in \mb N;\, x_n \in \mb Q\}$
+        \item $\ell^\infty = \{x = (x_1, \ldots, x_n, \ldots\,\big|\,
+         \sup\limits_{k \in \mb N} |x_j| < \infty \}$ — несепарабельное. Почему?
+         Предположим, что в нём есть счётное всюду плотное множество $M$.
+         Рассмотрим $A \subset \ell^\infty$: $A = \{x = (x_1, x_2,\ldots)\,\big|\,
+         x_j \in \{0, 1\}\}$. Заметим, что:
+         \begin{enumerate}
+            \item $A$ несчётно. ($\ol{0,x_1x_2x_3\ldots} \in [0, 1]$)
+            \item $\ldots$
+         \end{enumerate}
+    \end{enumerate}
+\end{examples}
+
+\begin{theorem}[О существовании ортогонального базиса]
+    Если $H$ — сепарабельное гильбертово пространство, то в нём существует
+    ортогональный базис.
+\end{theorem}
+\begin{proof}
+    Пусть $M$ — счётное всюду плотное множество в $H$:
+    $M = \{x_1, x_2, \ldots\}$, $\ol M = H$. Проредим последовательность $x_j$
+    так, чтобы все её элементы стали линейно независимы. В результате получим
+    новую последовательность $M_1 = \{y_1, y_2,\ldots,y_n,\ldots\} \subset M$.
+    Ясно, что $\Lin M_1 \supset M$. Заметим, что $\ol{\Lin M_1} = H$, так как оно
+    содержит $\ol M$, и $M_1$ линейно независимо. Будем проводить ортогонализацию:
+    Возьмём $e_1 = \frac{y_1}{\|y_1\|}$. Пусть $w_2 = y_2 - (y_2, e_1)e_1$, причём
+    $(w_2, e_1) = 0$, $w_2 \neq 0$ и $\Lin\{w_2, e_1\} = \Lin \{y_1, y_2\}$.
+    Возьмём $e_2 = \frac{w_2}{\|w_2\|}$. Далее, пусть $w_3 = y_3 - (y_3, e_1)e_1 -
+    (y_3, e_2)e_2$ ($(w_3, e_1) = (w_3, e_2) = 0$, $w_3 \neq 0$,
+    $\Lin\{w_3, e_1, e_2\} = \Lin\{y_1, y_2, y_3\}$) и берём
+    $e_3 = \frac{w_3}{\|w_3\|}$. И так далее. Получим
+    $M_2 = \{e_1, e_2, \ldots\}$ — ортонормированную систему.
+    $\ol{\Lin M_2} = \ol{\Lin M_1} = H$, то есть, $M_2$ — порождающая система,
+    то есть базис.
+\end{proof}
+
+\section{Теорема Рисса}
+
+\begin{lemma}
+    Пусть $L$ — линейное множество (над $\real$ или $\complex$),
+    $f, g: L \to \real(\complex)$ — линейные функционалы, $\Ker f \subset \Ker g$.
+    Тогда существует скаляр $\alpha$ такой, что $g(x) = \alpha f(x)$ $\forall x$.
+\end{lemma}
+\begin{proof}
+\mbox{}
+    \begin{enumerate}
+        \item Если $f\equiv 0$, то $\Ker f = L = \Ker g \implies g \equiv 0$.
+        \item Если $f\cancel \equiv 0$, то $\exists x_0:$ $f(x_0) \neq 0$.
+        Возьмём $x\in L$, $y = x - \frac{f(x)}{f(x_0)}x_0$.
+        $f(y) = f(x) - \frac{f(x)}{f(x_0)}f(x_0) = 0 \implies
+        y \in \Ker f\subset \Ker g \implies g(y) = 0$. Отсюда
+        $0 = g(y) = g(x) - \frac{f(x)}{f(x_0)}g(x_0)$ и $\forall x$
+        $g(x) = \frac{g(x_0)}{f(x_0)}f(x)$.
+    \end{enumerate}
 \end{proof}
 
 \end{document}
