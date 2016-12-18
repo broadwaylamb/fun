@@ -36,7 +36,7 @@
 \title{Функциональный анализ}
 
 \theoremstyle{plain}
-\newtheorem{theorem}{Теорема}[section]
+\newtheorem{theorem}{Теорема}[subsection]
 \newtheorem{corollary}[theorem]{Следствие}
 \newtheorem{proposition}[theorem]{Предложение}
 \newtheorem{lemma}[theorem]{Лемма}
@@ -1059,13 +1059,21 @@ $L^p(s, \nu)$ в $L^r(T, \mu)$ и был непрерывен?
 $$
 \int\limits_T |(Ux)(t)|^r \leqslant \int\limits_T
 \bigg(\int\limits_S|K(s, t)||x(s)|\dif s\bigg)^r \dif t \leqslant
-\int\limits_T\bigg(\bigg(\int\limits_S |K(s, t)| \cdots
+\int\limits_T\bigg(\bigg(\int\limits_S |K(s, t)|^q\dif s\bigg)^\frac{1}{q}\|x\|_p\bigg)^r\dif t =
 $$
+$$
+= \int\limits_T\bigg(\int\limits_S|K(s, t)|^q\dif s\bigg)^\frac{r}{q}\dif t \cdot \|x\|_p^r
+$$
+$$
+\|Ux\|_r \leqslant \bigg(\int\limits_T\bigg(\int\limits_S|K(s, t)|^q\dif s\bigg)^\frac{r}{q}\dif t
+\bigg)^\frac{1}{r} \cdot \|x\|_p
+$$
+Здесь мы воспользовались неравенством Гёльдера и $\frac{1}{q} + \frac{1}{p} = 1$.
 
 Таким образом, мы доказали следующую теорему.
 
 \begin{theorem}[О гёльдеровских условиях непрерывности]
-    Если $\int\limits_T\bigg(\int\limits_S |K|^q \dif s\bigg)^\frac{r}{q} \dif t
+    Если $\int\limits_T\bigg(\int\limits_S |K(s, t)|^q \dif s\bigg)^\frac{r}{q} \dif t
     < \infty$, то $U$ действует непрерывно из $L^p(s, \nu)$ в $L^r(T, \mu)$.
 \end{theorem}
 
@@ -1091,7 +1099,7 @@ $K$ — ядром Гильберта-Шмидта.
     \begin{enumerate}
         \item $\int\limits_S |K(s, t)|\varphi(s)\dif \nu(s) \leqslant A\psi(t)$ 
         для почти всех $t \in T$.
-        \item $\int\limits_T |K(s, t)|\psi(s)\dif \mu(s) \leqslant B\varphi(s)$ 
+        \item $\int\limits_T |K(s, t)|\psi(t)\dif \mu(t) \leqslant B\varphi(s)$ 
         для почти всех $s \in S$.
     \end{enumerate}
     Тогда $U$ — линейный непрерывный оператор из $L^2(S, \nu)$ в $L^2(T, \mu)$.
@@ -1106,9 +1114,17 @@ $K$ — ядром Гильберта-Шмидта.
     $$
     $$
     \int\limits_T |(Ux)(t)|^2 \dif t \leqslant \int\limits_T A\psi(t)
-    \int\limits_S \frac{|K(s,t)||x(s)|^2}{\varphi(s)} \dif s \dif t
+    \int\limits_S \frac{|K(s,t)||x(s)|^2}{\varphi(s)} \dif s \dif t =
+    \int\limits_S A \frac{|x(s)|^2}{\varphi(s)}
+    \underbrace{\int\limits_T |K(s, t)|\psi(t)\dif t}_{\leqslant B\varphi(s)} \dif s <
+    AB \int\limits_S |x(s)|^2\dif s
     $$
+    То есть, $\|Ux\|_2 \leqslant \sqrt{AB}\|x\|_2$.
 \end{proof}
+
+\begin{corollary}
+    $\|U\| \leqslant \sqrt{AB}$
+\end{corollary}
 
 \begin{exercise}
 \mbox{}
@@ -1116,7 +1132,7 @@ $K$ — ядром Гильберта-Шмидта.
         \item $S = T = (0, 1)$ с мерой Лебега, $K(s,t) = \frac{1}{\sqrt{|s-t|}}$.
         Заметим, что получается оператор, не являющийся
         оператором Гильберта-Шмидта, так как
-        $\int\limits_0^1\int\limits_0^1 \frac{1}{|s-t|\dif s\dif t} = +\infty$.
+        $\int\limits_0^1\int\limits_0^1 \frac{\dif s\dif t}{|s-t|} =~+\infty$.
         Придумать тест Шура для этого случая.
         \item $S = T = \real$, $K(s,t) = e^{-(s + t)^2}$. Является $U$ оператором
         Гильберта-Шмидта, и, если нет, является ли он непрерывным?
@@ -1149,7 +1165,7 @@ $K$ — ядром Гильберта-Шмидта.
     $$
     \frac{1}{t}\int\limits_0^t x(s) \dif s = \int\limits_0^\infty K(s,t)x(s)\dif s
     $$
-    где $K(s,t) = \frac{1}{t}\chi_{[0,t]}(s) = \frac{1}{t}\chi_{[s, +\infty)(t)}$.
+    где $K(s,t) = \frac{1}{t}\chi_{[0,t]}(s) = \frac{1}{t}\chi_{[s, +\infty)}(t)$.
     Возьмём $\varphi(s) \equiv 1$. Тогда
     $$
     \int\limits_0^\infty|K(s,t)|\varphi(s) \dif s =
@@ -1157,14 +1173,14 @@ $K$ — ядром Гильберта-Шмидта.
     $$
     Взяв $\psi(t) \equiv 1$, получим
     $$
-    \int\limits_0^\infty|K(s,t)|\psi(t) \dif t = \int\limits_0^\infty \frac{1}{t}
-    \dif t = \infty
+    \int\limits_0^\infty|K(s,t)|\psi(t) \dif t = \int\limits_0^\infty \frac{\dif t}{t}
+    = \infty
     $$
     Значит, такое $\psi$ не подходит. Возьмём $\psi(t) = t^{-\alpha}$, где
     $\alpha > 0$. Тогда
     $$
     \int\limits_0^\infty|K(s,t)|\psi(t) \dif t =
-    \int\limits_0^\infty \frac{1}{t^{\alpha + 1}} \dif t =
+    \int\limits_0^s \frac{\dif t}{t^{\alpha + 1}} =
     \frac{s^{-\alpha}}{\alpha}
     $$
     В качестве $\varphi(s)$ возьмём $s^{-\alpha}$.
@@ -1321,7 +1337,7 @@ $x \mapsto x$. Справедливо следствие:
     M \cdot \int\limits_{B_d(0)} \frac{\dif z}{|z|^\alpha} \leqslant
     $$
     $$
-    \leqslant M \cdot \frac{d^{m - \alpha}}{m - \alpha}
+    \leqslant M \cdot |S_1|\cdot \frac{d^{m - \alpha}}{m - \alpha}
     $$
     Здесь $A \in C(\overline\Omega \times \overline\Omega)$,
     $\|A\|_{C(\overline\Omega \times \overline\Omega)} = M$,
@@ -1356,8 +1372,8 @@ $x \mapsto x$. Справедливо следствие:
         $$
         \bigg|\int\limits_{\Omega_1}\ldots\bigg| \leqslant
         \int\limits_{\Omega_1} |K(s, t_1) - K(s, t_2)||x(s)|\dif s \leqslant
-        \|x\|_{C(\overline\Omega}\bigg(\int\limits_{\Omega_1}|K(s, t_1)|\dif s +
-        \int\limits_{\Omega_1}|K(s, t_2)\dif s \leqslant
+        \|x\|_{C(\overline\Omega)}\bigg(\int\limits_{\Omega_1}|K(s, t_1)|\dif s +
+        \int\limits_{\Omega_1}|K(s, t_2)|\dif s\bigg) \leqslant
         $$
         $$
         \leqslant M \cdot \|x\|\bigg(\int\limits_{\Omega_1}
@@ -1368,6 +1384,7 @@ $x \mapsto x$. Справедливо следствие:
         \frac{(\frac{3\rho}{2})^{m - \alpha}}{m - \alpha}\bigg) < 
         \frac{\varepsilon}{2}
         $$
+        Такая же оценка справедлива и для $\Big|\int\limits_{\Omega_2}\ldots\Big|$.
         $$
         \bigg|\int\limits_{\Omega_{1,2}}\ldots\bigg| \leqslant
         \|x\| \int\limits_{\Omega_{1,2}}\bigg|\frac{A(s, t_1)}{|s - t_1|^\alpha} -
@@ -1381,17 +1398,29 @@ $x \mapsto x$. Справедливо следствие:
         $$
         \leqslant
         \frac{\|x\|}{(\frac{\rho}{2})^{2\alpha}}
-        \underbrace{\int\limits_\Omega |A(s, t_1)|s - t_2|^\alpha -
-        A(s, t_2)|s - t_1|^\alpha \dif s}_{\underto{t_1 - t_2 \to 0} 0}
+        \underbrace{\int\limits_\Omega \Big|A(s, t_1)|s - t_2|^\alpha -
+        A(s, t_2)|s - t_1|^\alpha\Big| \dif s}_{\underto{|t_1 - t_2| \to 0} 0}
+        $$
+        Мы воспользовались тем, что $|s - t_1|^\alpha \geqslant (\frac{\rho}{2})^\alpha$ и
+        $|s - t_2|^\alpha \geqslant (\frac{\rho}{2})^\alpha$.
+        
+        Возьмём $g \in C(\ol \Omega \times \ol \Omega \times \ol \Omega)$:
+        $g(s, t_1, t_2) = A(s, t_1)|s-t_2|^\alpha$. g равномерно непрерывно:
+        $$
+        \forall \widetilde\varepsilon > 0\quad \exists \widetilde\delta > 0:
+        |(s, t_1, t_2) - (s', t'_1, t'_2)| =
+        $$
+        $$
+        =\sqrt{|s-s'|^2 + |t_1 - t'_1|^2 + |t_2 - t'_2|^2} < \widetilde\delta \implies
+        |g(s, t_1, t_2) - g(s', t'_1, t'_2)| < \widetilde\varepsilon
         $$
         
-        \ldots (пропущено полдоски)
-        
-        $$
-        \widetilde\varepsilon = \|x\|^{-1}\Big(\frac{\rho}{2}\Big)^{2\alpha}
+        Возьмём $\widetilde\varepsilon = \|x\|^{-1}\big(\frac{\rho}{2}\big)^{2\alpha}
         |\Omega|^{-1}
-        \frac{\varepsilon}{2}
-        $$
+        \frac{\varepsilon}{2}$.
+        Заметим, что под интегралом стоит
+        $|g(s, t_1, t_2) - g(s, t_2, t_1)| < \widetilde\varepsilon$
+        (при $|(s, t_1, t_2) - (s, t_2, t_1)| = \sqrt{2}|t_1 - t_2| < \widetilde\delta$).
         Отсюда находим $\widetilde\delta$.
         В результате $\delta = \frac{\widetilde\delta}{\sqrt{2}}$.
     \end{enumerate}
