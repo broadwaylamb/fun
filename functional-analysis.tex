@@ -1631,7 +1631,7 @@ $x \mapsto x$. Справедливо следствие:
     критерием Коши.
     $$
     \|S_m - S_n\|^2 = \bigg\|\sum\limits_{j=n+1}^m x_j\bigg\|^2 =
-    \sum\limits_{j=n+1}^m \|x_j\| = C_m - C_n = |C_m - C_n|
+    \sum\limits_{j=n+1}^m \|x_j\|^2 = C_m - C_n = |C_m - C_n|
     $$
     Таким образом, фундаментальность последовательности $S_n$ равносильна
     $\|S_m - S_n\| \underto{m,n \to \infty} 0 \iff \|C_m - C_n\|
@@ -1815,10 +1815,10 @@ $x \mapsto x$. Справедливо следствие:
     $y \in L \subset (L^\perp)^\perp$,
     $z \in L^\perp$. Тогда
     $\underbrace{x - y}_{\in (L^\perp)^\perp} = z \in L^\perp$. Это означает,
-    что $x-y \perp Z$, откуда $z = x - y = 0$, то есть $x = y \in L$ — 
+    что $x-y \perp z$, откуда $z = x - y = 0$, то есть $x = y \in L$ — 
     противоречие. Значит, в случае замкнутого $L$ его второе ортогональное 
     дополнение совпадает с ним самим. Рассмотрим случай, когда $L$ незамнкуто.
-    $L^\perp = (\ol L)^\perp$, $(L\perp)^\perp = ((\ol L)^\perp)^\perp = \ol L$.
+    $L^\perp = (\ol L)^\perp$, $(L^\perp)^\perp = ((\ol L)^\perp)^\perp = \ol L$.
 \end{proof}
 
 \begin{definition}
@@ -1829,25 +1829,23 @@ $x \mapsto x$. Справедливо следствие:
 \end{definition}
 
 \begin{proposition}[Свойства ортогонального проектора]
+\mbox{}
     \begin{enumerate}
         \item $P_L$ — линейное отображение.
         \item $P_L \in B(H, H)$, т. е. $P_L$ непрерывно.
-    \end{enumerate}
-\end{proposition}
-\begin{proof}
-    \begin{enumerate}
-        \item 
-        \item Проверим, что $\|P_Lx\| \leqslant C\|x\|$. Предствавим $x$ в виде
-        $x = y + z$, где $y \in L$, $z \in L^\perp$. Отсюда
-        $\|x\|^2 = \|y\|^2 + \|z\|^2 \implies \|y\| \leqslant \|x\|$. То есть,
-        $\|P_Lx\| \leqslant \|x\| \implies \|P_L\| \leqslant 1$.
         \item $\Ker P_L = L^\perp$.
         \item $P_L(H) = L$.
         \item $P_L + P_{L^\perp} = I$
     \end{enumerate}
+\end{proposition}
+\begin{proof}
+        Докажем свойство 2. Проверим, что $\|P_Lx\| \leqslant C\|x\|$. Предствавим $x$ в виде
+        $x = y + z$, где $y \in L$, $z \in L^\perp$. Отсюда
+        $\|x\|^2 = \|y\|^2 + \|z\|^2 \implies \|y\| \leqslant \|x\|$. То есть,
+        $\|P_Lx\| \leqslant \|x\| \implies \|P_L\| \leqslant 1$.
 \end{proof}
 \begin{remark}
-    Если $L \neq \{0\}$, то $\|P_L\| = 1$ (так как $\forall x \in L P_Lx = x$.
+    Если $L \neq \{0\}$, то $\|P_L\| = 1$ (так как $\forall x \in L$ $P_Lx = x$).
 \end{remark}
 
 \begin{theorem}[О характеристике ортогональных проекторов]
@@ -1881,7 +1879,7 @@ $x \mapsto x$. Справедливо следствие:
 \begin{definition}\label{orthogonal_system}
     Пусть $H$ — гильбертово пространство. Система векторов
     $\{e_\alpha\}_{\alpha \in A} \subset H$ ($A$ — некоторое множество индексов)
-    называется ортогональной, если $e_\alpha \neq 0 \forall \alpha \in A$ и
+    называется ортогональной, если $e_\alpha \neq 0$ $\forall \alpha \in A$ и
     $(e_{\alpha_1}, _{\alpha_2}) = 0$, если $\alpha_1 \neq \alpha_2$. Система
     векторов называется ортонормированной, если она ортогональна и норма каждого
     вектора системы равна единице.
@@ -1902,7 +1900,7 @@ $x \mapsto x$. Справедливо следствие:
     это равенство скалярно на $e_m$. Получим
     $\sum\limits_{j=1}^n \lambda_j(e_j, e_m) = 0$. Отсюда
     $\lambda_m(e_m, e_m) = 0$, но $(e_m, e_m) \neq 0$, значит,
-    $\lambda_m = 0 \forall m$.
+    $\lambda_m = 0$ $\forall m$.
 \end{proof}
 
 \begin{proposition}
@@ -1914,7 +1912,7 @@ $x \mapsto x$. Справедливо следствие:
     Рассмотрим представление $x = \sum\limits_{j=1}^\infty \lambda_je_j$, умножим 
     его скалярно на $e_m$.
     $$
-    (x, e_m) = (\sum\limits_{j=1}^\infty \lambda_je_j, e_m) =
+    (x, e_m) = \bigg(\sum\limits_{j=1}^\infty \lambda_je_j, e_m\bigg) =
     \sum\limits_{j=1}^\infty(\lambda_je_j, e_m) = \lambda_m(e_m, e_m)
     $$
     Отсюда $\lambda_m = \frac{(x, e_m)}{(e_m, e_m)}$, то есть коэффициент
@@ -1957,7 +1955,7 @@ $x_1e_1 + x_2e_2 = (x_1, x_2, 0)$. Он сходится как конечная
 \begin{proof}
     Докажем первое утверждение. Возьмём $m: 1 \leqslant m \leqslant n$.
     $$
-    (x - S_n(x), e_m) = (x, e_m) - (\sum\limits_{j=1}^n c_j(x)e_j, e_m) =
+    (x - S_n(x), e_m) = (x, e_m) - \bigg(\sum\limits_{j=1}^n c_j(x)e_j, e_m\bigg) =
     (x, e_m) - c_m(x)(e_m, e_m) = 0
     $$
     Докажем второе утверждение. $x = \underbrace{S_n(x)}_{\in L_n} +
@@ -1979,7 +1977,7 @@ $x_1e_1 + x_2e_2 = (x_1, x_2, 0)$. Он сходится как конечная
     $x \in H$. Тогда:
     \begin{enumerate}
         \item Ряд Фурье для $x$ сходится.
-        \item Если $S(x)$ — сумма этого ряда, то $x - S(x) \perp e_j \forall j$.
+        \item Если $S(x)$ — сумма этого ряда, то $x - S(x) \perp e_j$ $\forall j$.
         \item $x = S(x) \iff \sum\limits_{j=1}^\infty |c_j(x)|^2\cdot\|e_j\|^2 =
         \|x\|^2$
     \end{enumerate}
@@ -1992,20 +1990,21 @@ $x_1e_1 + x_2e_2 = (x_1, x_2, 0)$. Он сходится как конечная
         сходится, то 
         есть $\sum\limits_{j=1}^\infty |c_j(x)|^2\|e_j\|^2$ сходится, что верно по 
         неравенству Бесселя.
-        \item $(x - S9x), e_j) = (x, e_j) -
-        (\sum\limits_{k=1}^\infty c_k(x)e_k, e_j) = (x - e_j) - c_j(x)(e_j, e_j) = 
+        \item $(x - S(x), e_j) = (x, e_j) -
+        \bigg(\sum\limits_{k=1}^\infty c_k(x)e_k, e_j\bigg) = (x, e_j) - c_j(x)(e_j, e_j) = 
         0$
         \item $x = \underbrace{z}_{\in L^\perp} + \underbrace{S(x)}_{\in L}$, где
         $L = \ol{\Lin\{e_j\}}$. По теореме Пифагора
         $\|x\|^2 = \|z\|^2 + \|S(x)\|^2$. Отсюда $x = S(x) \iff z = 0 \iff
-        \|x\|^2 = \|S(x)\|^2 = \|\sum\limits_{j=1}^\infty c_j(x) e_j\|^2 =
+        \|x\|^2 = \|S(x)\|^2 = \bigg\|\sum\limits_{j=1}^\infty c_j(x) e_j\bigg\|^2 =
         \sum\limits_{j=1}^\infty |c_j(x)|^2\|e_j\|^2$.
     \end{enumerate}
 \end{proof}
 
 \begin{definition}
     Рассмотрим ортогональную систему $\{e_j\} \subset H$. Эта система называется
-    \emph{ортогональным базисом} в $H$, если $\forall x \in H$ $S(x) = x$.
+    \emph{ортогональным базисом} в $H$, если $\forall x \in H$ $S(x) = x$ ($S(x)$ —
+    сумма ряда Фурье).
 \end{definition}
 
 Возвращаясь к примеру \ref{fourier_series_bad_example}, легко видеть, что 
@@ -2022,12 +2021,12 @@ $x_1e_1 + x_2e_2 = (x_1, x_2, 0)$. Он сходится как конечная
 \end{definition}
 
 \begin{theorem}[О характеристике ортогонального базиса]
-    Пусть $\{e_j\}$ — ортогональная система в $H$ — гильбертово.
+    Пусть $\{e_j\}$ — ортогональная система в $H$ — гильбертовом пространстве.
     Тогда следующие утверждения 
     равносильны:
     \begin{enumerate}
         \item $\{e_j\}$ — ортогональный базис.
-        \item $\forall x \in H \|x\|^2 =
+        \item $\forall x \in H$ $\|x\|^2 =
         \sum\limits_{k=1}^\infty |c_j(x)|^2\|e_j\|^2$.
         \item $\{e_j\}$ — порождающая система.
         \item $\{e_j\}$ — полная система.
@@ -2039,12 +2038,12 @@ $x_1e_1 + x_2e_2 = (x_1, x_2, 0)$. Он сходится как конечная
         \item ($1 \Leftrightarrow 2$). Утверждается в теореме Риса-Фишера.
         \item ($1 \Rightarrow 3$). $x = \sum\limits_{j=1}^\infty c_j(x)e_j =
         \lim\limits_{n \to \infty}
-        \underbrace{\sum\limits_{j=1}^n c_j(x) e_j)}_{\in \Lin \{e_j\}} \in
+        \underbrace{\sum\limits_{j=1}^n c_j(x) e_j}_{\in \Lin \{e_j\}} \in
         \ol{\Lin\{e_j\}} \implies \ol{\Lin \{e_j\}} = H$.
         \item ($3 \Rightarrow 4$). $\{e_j\}$ — порождающая система, значит,
         $\ol{\Lin\{e_j\}} = H$. $\{e_j\}^\perp = (\ol{\Lin\{e_j\}})^\perp =
-        H_\perp = \{0\} \implies \{e_j\}$ — полная.
-        \item ($4 \Rightarrow 1$). $x = z + S(x)$, где $z \perp e_j \forall j$.
+        H^\perp = \{0\} \implies \{e_j\}$ — полная.
+        \item ($4 \Rightarrow 1$). $x = z + S(x)$, где $z \perp e_j$ $\forall j$.
         Это означает, что $z = 0$, так как система полная, и $x = S(x)$.
     \end{enumerate}
 \end{proof}
@@ -2056,7 +2055,7 @@ $x_1e_1 + x_2e_2 = (x_1, x_2, 0)$. Он сходится как конечная
         (0, 0, \ldots, \underbrace{1}_j, 0, \ldots)$.
         $\{e_j\}_{j=1}^\infty$ — ортонормированный базис.
         \item $L^2(0, 2\pi)$.
-        $\{1, \sin t, \cos t, \sin 2t, \cos 2t, \ldots, \ldots\}$ —
+        $\{1, \sin t, \cos t, \sin 2t, \cos 2t, \ldots\}$ —
         ортогональный базис. Как доказать, 
         что это действительно базис? Проще всего в данной ситуации проверить, что
         рассматриваемая система является порождающей. Для этого надо любую функцию
@@ -2091,14 +2090,23 @@ $x_1e_1 + x_2e_2 = (x_1, x_2, 0)$. Он сходится как конечная
         плотного множества:
         $M = \{(x_1, x_2,\ldots,x_k, 0, 0, \ldots)\,\big|\,
         k \in \mb N;\, x_n \in \mb Q\}$
-        \item $\ell^\infty = \{x = (x_1, \ldots, x_n, \ldots\,\big|\,
+        \item $\ell^\infty = \{x = (x_1, \ldots, x_n, \ldots)\,\big|\,
          \sup\limits_{k \in \mb N} |x_j| < \infty \}$ — несепарабельное. Почему?
          Предположим, что в нём есть счётное всюду плотное множество $M$.
-         Рассмотрим $A \subset \ell^\infty$: $A = \{x = (x_1, x_2,\ldots)\,\big|\,
-         x_j \in \{0, 1\}\}$. Заметим, что:
+         Рассмотрим $A \subset \ell^\infty$:
+         $$
+         A = \{x = (x_1, x_2,\ldots)\,\big|\,
+         x_j \in \{0, 1\}\}
+         $$
+         Заметим, что:
          \begin{enumerate}
-            \item $A$ несчётно. ($\ol{0,x_1x_2x_3\ldots} \in [0, 1]$)
-            \item $\ldots$
+            \item $A$ несчётно.
+            \item $\forall x,y\in A: x \neq y$ $\|x-y\|=1$
+            \item Рассмотрим различные элементы $x_\alpha \in A$ и
+            шары $B_{\frac{1}{2}}(x_\alpha)$.
+            Ясно, что эти шары не пересекаются. Но по определению счётного всюду плотного множества
+            каждый из этих шаров должен содержать точку из $M$ — счётного, в то время как число
+            шаров несчётно. Очевидно, что это невозможно.
          \end{enumerate}
     \end{enumerate}
 \end{examples}
