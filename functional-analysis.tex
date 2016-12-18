@@ -454,7 +454,7 @@ $$
     $$
     \|x_{n+1} - x_n\| = \|F(x_n) - F(x_{n-1})\| \leqslant \gamma \|x_n - x_{n-1}\|
     \leqslant \gamma^2\|x_{n-1} - x_{n-2}\| \leqslant \ldots \leqslant
-    \gamma^{n+1}\underbrace{\|x_2 - x_1\|}_{\alpha}
+    \gamma^{n-1}\underbrace{\|x_2 - x_1\|}_{\alpha}
     $$
     Таким образом, при $m > n$:
     $$
@@ -521,7 +521,7 @@ $$
         \item $F_0(x) - F_0(y) = F_0(x - y)$
         \item $F(x) - F(y) = F_0(x) - F_0(y)$
         \item $F^n(x) - F^n(y) = F(F^{n-1}(x) - F^{n-1}(y)) =
-        F_0(F^{n-1}(x)) - F_0(F^{n-1}(y)) = F_0(F^{n-1}(x) - F^{n-1}(y)) =
+        F_0(F^{n-1}(x)) - F_0(F^{n-1}(y)) = F_0(F^{n-1}(x) -~F^{n-1}(y)) =
         F_0^n(x-y)$
     \end{itemize}
     $$
@@ -574,7 +574,7 @@ $$
     $$
     $$
     \quad x\in C[0,1],\, a\in C[0,1] \implies
-    \int\limits_0^t xa \in C^1[0,1]
+    \int\limits_0^t x(s)a(s)\dif s \in C^1[0,1]
     $$
     Таким образом всё доказано.
 \end{example}
@@ -599,7 +599,7 @@ $$
 \mbox{}
     \begin{enumerate}
         \item $U(0) = 0$;
-        \item $U(\sum\limits_{j=1}^n \lambda_j x_j) = \sum\limits_{j=1}^n
+        \item $U\bigg(\sum\limits_{j=1}^n \lambda_j x_j\bigg) = \sum\limits_{j=1}^n
         \lambda_j Ux_j$;
         \item\label{image_linearity} Если $M \subset X$ — линейное множество,
         то множество
@@ -659,7 +659,7 @@ $$
         \item $U$ непрерывен в нуле;
         \item Образ любого ограниченного множества ограничен;
         \item Существует $C$ такое, что $\forall x\in X$
-        выполняется $\|U_x\|_Y = C\|x\|_X$.
+        выполняется $\|Ux\|_Y = C\|x\|_X$.
     \end{enumerate}
 \end{theorem}
 \begin{proof}
@@ -671,7 +671,7 @@ $$
         \item $2 \Rightarrow 3$. Непрерывность в нуле означает, что
         $\forall \varepsilon > 0$ $\exists \delta > 0$ такое, что
         $\|x\|<\delta \implies \|Ux\|<\varepsilon$. Ограниченность множества $M$ в $X$
-        означает, что $\exists R:$ $N \subset B_R(0)=\{\|x\|\leqslant R\}$.
+        означает, что $\exists R:$ $M \subset B_R(0)=\{\|x\|\leqslant R\}$.
         Таким образом, $x\in M \implies \|x\| \leqslant R$.
         $\|\frac{\delta}{2R}x\| \leqslant \frac{\delta}{2} < \delta \implies
         \|U(\frac{\delta}{2R}x)\| < \varepsilon$. Отсюда
@@ -681,7 +681,7 @@ $$
         $U(B_1(0))$ — ограничено, т. е. существует такое $C$, что
         $U(B_1(0)) \subset B_C(0)$. Если $\|x\|\leqslant 1$, то $\|Ux\| \leqslant C$.
         Теперь возьмём произвольное $x$. $x' = \frac{x}{\|x\|} \in B_1(0) \implies
-        \|Ux'\| \leqslant C$. Но $\|Ux\| = \|U\big(\frac{x}{\|x\|}\big)\| =
+        \|Ux'\| \leqslant C$. Но $\|Ux'\| = \|U\big(\frac{x}{\|x\|}\big)\| =
         \frac{1}{\|x\|} \cdot \|Ux\|$. Отсюда $\|Ux\|\leqslant C\|x\|$.
     \end{itemize} 
 \end{proof}
@@ -703,9 +703,9 @@ $$
      Пусть $U: X \to Y$ — линейный непрерывный оператор. Тогда:
      $$
      \|U\| = \underbrace{\sup\limits_{x \neq 0}\frac{\|Ux\|}{\|x\|}}_A =
-     \underbrace{\sup\limits_{\|x\|\leqslant 1} \|U_x\|}_B =
-     \underbrace{\sup\limits_{\|x\| < 1} \|U_x\|}_C =
-     \underbrace{\sup\limits_{\|x\| = 1} \|U_x\|}_D
+     \underbrace{\sup\limits_{\|x\|\leqslant 1} \|Ux\|}_B =
+     \underbrace{\sup\limits_{\|x\| < 1} \|Ux\|}_C =
+     \underbrace{\sup\limits_{\|x\| = 1} \|Ux\|}_D
      $$
 \end{theorem}
 \begin{remark}
@@ -721,7 +721,7 @@ $$
     \sup\limits_{x \neq 0} \frac{\|Ux\|}{\|x\|} = A
     $$
     Докажем, что $D \geqslant A$. Возьмём $x'=\frac{x}{\|x\|}$, тогда $\|x'\|=1$ и
-    $\|Ux\|\leqslant D$. $\|U(\frac{x}{\|x\|})\| = \frac{\|Ux\|}{\|x\|}$.
+    $\|Ux'\|\leqslant D$. $\|U(\frac{x}{\|x\|})\| = \frac{\|Ux\|}{\|x\|}$.
     Итак, $\frac{\|Ux\|}{\|x\|} \leqslant D$, тогда и
     $\sup\limits_{x \neq 0}\frac{\|Ux\|}{\|x\|}$.
     Осталось проверить, что $C \geqslant A$. Возьмём $x \neq 0$, $\varepsilon > 0$.
@@ -756,7 +756,7 @@ $$
          \sup\limits_{\|x\|=1} |\lambda|\|Ux\| = |\lambda| \sup\limits_{\|x\|=1}
          \|U_x\| =
          |\lambda|\|U\|$;
-         \item $x \in X$. $\|(U+V)(x) = \|Ux + Vx\| \leqslant \|Ux\| + \|Vx\|
+         \item $x \in X$. $\|(U+V)(x)\| = \|Ux + Vx\| \leqslant \|Ux\| + \|Vx\|
          \leqslant \|U\|\|x\| + \|V\|\|x\| = (\|U\| + \|V\|)\|x\|$
          \item $x \in X$. $\|(WU)(x)\| = \|W(U(x))\| \leqslant \|W\|\cdot \|Ux\|
          \leqslant \|W\|\|U\|\|x\|$.
@@ -771,7 +771,7 @@ $$
     $\forall \varepsilon>0$ $\exists N:$ $\forall m,n > N$ $\|U_n - U_m\| < \varepsilon$.
     Это означает, что $\|(U_n - U_m)(x)\| \leqslant \varepsilon \|x\|$. Следовательно,
     $\{U_nx\}$ фундаментальна в $Y$. Обозначим $Ux = \lim\limits_{n \to \infty}
-    U_nx$. Мы хотим проверить, что $U$ непрерывно, линейно и что есть сходимость.
+    U_nx$. Мы хотим проверить, что $U$ непрерывно, линейно и что есть сходимость по норме.
     \begin{enumerate}
         \item (Линейность $U$). $U(\alpha_1x_1 + \alpha_2x_2) = \lim\limits_{n \to \infty}
         U_n(\alpha_1x_1 + \alpha_2x_2) = 
@@ -787,7 +787,7 @@ $$
         $\forall \varepsilon > 0$ $\exists N$: $\forall m,n>N$ $\forall x\in X$ $
         \|U_nx - U_mx\| \leqslant \varepsilon \|x\|$. Устремив $n$ к бесконечности, 
         получим: $\forall \varepsilon > 0$ $\exists N$: $\forall m > N$
-        $\forall x\in X$ $\|Ux - U_mx\| = \|(U - U_m)(x)\| \leqslant \|x\|$
+        $\forall x\in X$ $\|Ux - U_mx\| = \|(U - U_m)(x)\| \leqslant \varepsilon \|x\|$
         $\implies \|U - U_m\| \leqslant \varepsilon$. Итак,
         $\forall \varepsilon > 0$ $\exists N$: $\forall m > N$
         $\|U - U_m\| \leqslant \varepsilon$, т. е. $U_n \to U$ в $B(X, Y)$.
@@ -796,7 +796,7 @@ $$
 
 Следует отметить важный частный случай.
 \begin{definition}
-    $B (X, \text{поле скаляров }) = X^\ast$ называется
+    $B (X, \text{поле скаляров}) = X^\ast$ называется
     \emph{сопряжённым пространством к $X$}. $f \in X^\ast$ называется \emph{линейным
     непрерывным функционалом}.
 \end{definition}
@@ -870,7 +870,7 @@ $A^{-1} \in B(Y, X)$.
 \end{proof}
 
 \begin{theorem}[Об обратимости оператора, близкого к обратимому]
-    Пусть $U \in B(X, Y)$ — линейное отображение и существует $B^{-1}\in B(Y, X)$.
+    Пусть $U \in B(X, Y)$ — линейное отображение и существует $U^{-1}\in B(Y, X)$.
     Кроме того, $X$ \textbf{или} $Y$ — полное пространство.
     Рассмотрим $V\in B(X, Y)$ такой, что $\|V\| < \|U^{-1}\|^{-1}$. Тогда
     существует $(U + V)^{-1} \in B(Y, X)$.
@@ -927,9 +927,10 @@ $X^\ast = B(X, \text{поле скаляров})$ называется сопр�
         $$
         $$
         \|f\|\geqslant \frac{|f(x_0)|}{\|x_0\|_p} =
-        \frac{\int\limits_T |y_0|^q}{\bigg(\int\limits_T} \cdots
+        \frac{\int\limits_T |y_0|^q}{\bigg(\int\limits_T|y_0|^q\bigg)^\frac{1}{p}} =
+        \bigg(\int\limits_T |y_0|^q)\bigg)^\frac{1}{q} = \|y_0\|_q
         $$
-        Таким образом, $L^q(T, \mu) \hookrightarrow L^q(T, \mu)^\ast$,
+        Таким образом, $L^q(T, \mu) \hookrightarrow L^p(T, \mu)^\ast$,
         $y_0 \mapsto f$ и $\|y_0\|_q = \|f\|$. Имеет место
         \emph{изометрическое вложение}, и даже более того, биекция.
 \end{example}
@@ -955,7 +956,7 @@ $X^\ast = B(X, \text{поле скаляров})$ называется сопр�
     |t|\dif t + \int\limits_{-\varepsilon}^\varepsilon \frac{t^2}{\varepsilon}
     \dif t = 1 + O(\varepsilon)
     $$
-    Получаем, что $\|f\|\geqslant \frac{f(x_\varepsilon}{\|x_\varepsilon\|}
+    Получаем, что $\|f\|\geqslant \frac{f(x_\varepsilon)}{\|x_\varepsilon\|}
     \underto{\varepsilon \to 0} 1$.
     Теперь возьмём
     $y_0 \in L^1(-1, 1)$, $f(x) = \int\limits_{-1}^1 y_0(t)x(t)\dif t$.
@@ -972,15 +973,15 @@ $X^\ast = B(X, \text{поле скаляров})$ называется сопр�
     $\int\limits_{-1}^1 y_0(t)x(t)\dif t = x(0)$
 \end{exercise}
 
+Напомним, что $\ell^\infty = \{x = (x_1, x_2, \ldots),\, \|x\|_\infty = 
+\sup\limits_{j \geqslant 1} |x_j| < \infty\}$ и
+$c_0 = \{x = (x_1, x_2, \ldots),\, \lim\limits_{j \to \infty} x_j =~0\}$,
+$c_0 \subset \ell^\infty$. При этом $\|x\|_{c_0} = \|x\|_\infty$. $c_0$ — полное
+нормированное пространство.
+
 \begin{theorem}
     $(c_0)^\ast = \ell^1$
 \end{theorem}
-
-Напомним, что $\ell^\infty = \{x = (x_1, x_2, \ldots),\, \|x\|_\infty = 
-\sup\limits_{j \geqslant 1} |x_j| < \infty\}$ и
-$c_0 = \{x = (x_1, x_2, \ldots),\, \lim\limits_{j \to \infty} x_j = 0\}$,
-$c_0 \subset \ell^\infty$. При этом $\|x\|_{c_0} = \|x\|_\infty$. $c_0$ — полное
-нормированное пространство.
 
 Рассмотрим $L_\text{fin} \subset \ell^\infty$ такое, что $x \in L_\text{fin}$,
 если у $x$ лишь конечное число ненулевых координат. Отметим, что $L_\text{fin}$
@@ -1001,9 +1002,14 @@ $\overline{L_\text{fin}} = c_0$
         \item Возьмём $y^{(0)} \in \ell^1$, где
         $y^{(0)} = (y_1^{(0)}, y_2^{(0)}, \ldots)$
         и $\|y^{(0)}\|_1 = \sum\limits_{j=1}^\infty |y_j^{(0)}| < \infty$.
-        Построим по нему функционал на $c_0$.
-        
-        $\cdots$
+        Построим по нему функционал на $c_0$. Пусть $x \in c_0$. Рассмотрим
+        $f(x) = \sum\limits_{j=1}^\infty x_jy_j^{(0)}$.
+        $$
+        |f(x)| \leqslant\sum\limits_{j=1}^\infty \underbrace{|x_j|}_{\leqslant \|x\|_\infty}
+        |y_j^{(0)}| \leqslant \|x\|_\infty \sum\limits_{j=1}^\infty |y_j^{(0)}| =
+        \|y^{(0)}\|_1 \|x\|_\infty \implies
+        \|f\| \leqslant \|y^{(0)}\|_1
+        $$
         
         Мы построили вложение $\ell^1 \hookrightarrow (c_0)^\ast$, $y^{(0)} 
         \mapsto f$.
@@ -1029,7 +1035,7 @@ $\overline{L_\text{fin}} = c_0$
     \end{enumerate}
 \end{proof}
 
-\section{Интегральные операторы. Часть I}
+\section{Интегральные операторы}
 
 Что такое интегральный оператор? Допустим, у нас есть функция двух переменных
 $K(s, t)$, называемая \emph{ядром интегрального оператора} (не путать с ядром
