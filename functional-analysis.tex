@@ -2205,31 +2205,31 @@ $x_1e_1 + x_2e_2 = (x_1, x_2, 0)$. Он сходится как конечная
     $V$ называется \emph{сопряжённым оператором} к $U$. Обозначение: $V = U^\ast$.
 \end{definition}
 \begin{proposition}
-    Пусть $x, y \in H$. Если $(x, z) = (y, z) \forall z \in H$, то $x = y$.
+    Пусть $x, y \in H$. Если $(x, z) = (y, z)$ $\forall z \in H$, то $x = y$.
 \end{proposition}
 \begin{proof}
-    Из условия следует, что $(x - y, z) = 0 \forall z \in H$, откуда
+    Из условия следует, что $(x - y, z) = 0$ $\forall z \in H$, откуда
     $x - y \perp x - y$.
 \end{proof}
 \begin{proof}[Доказательство теоремы]
     Возьмём вектор $y \in H$ и построим по нему функционал $f \in H^\ast$:
     $f(x) = (Ux, y)$. Очевидно, что он линеен. Проверим непрерывность:
     $$
-    |f(x)| = |(Ux, y)| \leqslant \|Ux\|\|y\| \leqslant \big(\|U\|\|y\|\big)\|z\|
+    |f(x)| = |(Ux, y)| \leqslant \|Ux\|\|y\| \leqslant \|U\|\|y\|\|x\|
     $$
     Мы имеем линейный непрерывный функционал. По теореме Риса существует вектор
-    $z$, который его задаёт: $f(x) = (x, z) \forall x$. Таким образом:
+    $z$, который его задаёт: $f(x) = (x, z)$ $\forall x$. Таким образом:
     $$
     \forall x\quad (Ux, y) = (x, z)
     $$
     Определим $V(y) = z$, то есть, $\forall x,y$ $(Ux, y) = (x, V(y))$.
-    Проверим, что $V$ — линейный непрерывный функционал.
+    Проверим, что $V$ — линейный непрерывный оператор.
     $$
     (x, V(\alpha_1y_1 + \alpha_2y_2)) = (Ux, \alpha_1x_1 + \alpha_2x_2) =
     \ol{\alpha_1}(Ux, y_1) + \ol{\alpha_2}(Ux, y_2) =
     $$
     $$
-    \ol{\alpha_1}(x, V(y_1)( + \ol{\alpha_2}(x, V(y_2) =
+    =\ol{\alpha_1}(x, V(y_1)) + \ol{\alpha_2}(x, V(y_2) =
     (x, \alpha_1V(y_1) + \alpha_2V(y_2))
     $$
     Так как это выполнено для любого $x$, то $V(\alpha_1y_1 + \alpha_2y_2) =
@@ -2246,8 +2246,8 @@ $x_1e_1 + x_2e_2 = (x_1, x_2, 0)$. Он сходится как конечная
     Отсюда $\|V\| \leqslant \|U\|$ и непрерывность доказана.
     
     Докажем единственность $V$. Пусть существуют $V_1$, $V_2$ такие, что
-    $\forall x,y$ $(x, V_1y) = (Ux, y) = (x, V_2y)$. Ясно, что $\forall y
-    V_1y = V_2y$.
+    $\forall x,y$ $(x, V_1y) = (Ux, y) = (x, V_2y)$. Ясно, что $\forall y$
+    $V_1y = V_2y$.
 \end{proof}
 
 \begin{proposition}[Свойства сопряжённого оператора]
@@ -2286,8 +2286,8 @@ $x_1e_1 + x_2e_2 = (x_1, x_2, 0)$. Он сходится как конечная
         \item $UU^{-1} = U^{-1}U = I$. $(U^{-1})^\ast U^\ast =
         U^\ast(U^{-1})^\ast = I^\ast = I$, откуда
         $(U^\ast)^{-1} = (U^{-1})^\ast$.
-        \item $x \in \Ker U^\ast \iff U^\ast x = 0 \iff \forall y\in H
-        (y, U^\ast x) = 0 \iff \forall y (Uy, x) = 0 \iff x \perp U(H) \iff
+        \item $x \in \Ker U^\ast \iff U^\ast x = 0 \iff \forall y\in H$
+        $(y, U^\ast x) = 0 \iff \forall y$ $(Uy, x) = 0 \iff x \perp~U(H) \iff
         x \in (U(H))^\perp$.
         \item Следует из предыдущего свойства с учётом $(L^\perp)^\perp = \ol{L}$.
     \end{enumerate}
