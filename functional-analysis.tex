@@ -1459,8 +1459,8 @@ $x \mapsto x$. Справедливо следствие:
 \begin{proof}
     Докажем свойство \ref{scalar_product_halflinearity}.
     $$
-    \varphi(x, \sum\limits_{j=1}^n \lambda_j y_j) =
-    \ol{\varphi(\sum\limits_{j=1}^n \lambda_j y_j, x)} =
+    \varphi\bigg(x, \sum\limits_{j=1}^n \lambda_j y_j\bigg) =
+    \ol{\varphi\bigg(\sum\limits_{j=1}^n \lambda_j y_j, x\bigg)} =
     \ol{\sum\limits_{j=1}^n\lambda_j \varphi(y_j, x)} =
     \sum\limits_{j=1}^n \ol{\lambda_j}\varphi(x, y_j)
     $$
@@ -1473,7 +1473,7 @@ $x \mapsto x$. Справедливо следствие:
     $$
     $$
     = \varphi(x, x) + \ol\lambda\varphi(x, y) +
-    \underbrace{\lambda(y, x)}_{\lambda\ol{\varphi(x, y)}} +
+    \underbrace{\lambda\varphi(y, x)}_{\lambda\ol{\varphi(x, y)}} +
     \underbrace{\lambda\ol\lambda\varphi(y, y)}_{|\lambda|^2\varphi(y, y)}
     $$
     Выберем $\lambda$ следующим образом:
@@ -1482,7 +1482,7 @@ $x \mapsto x$. Справедливо следствие:
     = \varphi(x, x) + 2t|\varphi(x, y)|^2 + t^2|\varphi(x, y)|^2\varphi(y, y)
     $$
     Дискриминант этого трёхчлена $D = 4|\varphi(x, y)|^4 -
-    |\varphi(x, y)|^2 \varphi(x, x)\varphi(y, y) \leqslant 0$. Отсюда следует,
+    4|\varphi(x, y)|^2 \varphi(x, x)\varphi(y, y) \leqslant 0$. Отсюда следует,
     что $|\varphi(x, y)|^2 \leqslant \varphi(x, x)\varphi(y, y)$.
     
     В свойстве \ref{scalar_product_norm} проверим аксиомы нормы:
@@ -1552,7 +1552,11 @@ $x \mapsto x$. Справедливо следствие:
     $\|x + y\|^2 + \|x - y\|^2 = 2(\|x\|^2 + \|y\|^2)$
 \end{proposition}
 \begin{proof}
-    Упражнение
+    Запишем равенства:
+    $$
+    \|x \pm y\| = (x \pm y, x \pm y) = \|x^2\| \pm (x, y) \pm (y, x) + \|y^2\|
+    $$
+    Сложим их. Получим требуемое.
 \end{proof}
 
 \begin{example}
@@ -1619,15 +1623,15 @@ $x \mapsto x$. Справедливо следствие:
     Рассмотрим ортогональный ряд (1) $\sum\limits_{j=1}^\infty x_j$ и ряд (2)
     $\sum\limits_{j=1}^\infty \|x_j\|^2$. Ряд (1) сходится тогда и только тогда,
     когда ряд (2) сходится. В случае сходимости выполняется теорема Пифагора
-    $\|\sum\limits_{j=1}^\infty x_j\| = \sum\limits_{j=1}^\infty \|x_j\|$.
+    $\Big\|\sum\limits_{j=1}^\infty x_j\Big\|^2 = \sum\limits_{j=1}^\infty \|x_j\|^2$.
 \end{theorem}
 \begin{proof}
     Обозначим $S_n = \sum\limits_{j=1}^nx_j$,
     $C_n = \sum\limits_{j=1}^n\|x_j\|^2$. Возьмём $m > n$ и воспользуемся 
     критерием Коши.
     $$
-    \|S_m - S_n\|^2 = \|\sum\limits_{j=n+1}^m x_j\|^2 =
-    \sum\limits_{j=n+1}^m \|x_j\| = C_m - C_n = |C_n - C_n|
+    \|S_m - S_n\|^2 = \bigg\|\sum\limits_{j=n+1}^m x_j\bigg\|^2 =
+    \sum\limits_{j=n+1}^m \|x_j\| = C_m - C_n = |C_m - C_n|
     $$
     Таким образом, фундаментальность последовательности $S_n$ равносильна
     $\|S_m - S_n\| \underto{m,n \to \infty} 0 \iff \|C_m - C_n\|
