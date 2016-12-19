@@ -2605,7 +2605,7 @@ $$
     K_n(s,t) =
     \begin{cases}
         K(s, t),\text{ если } |s - t| \geqslant \frac{1}{n}\\
-        \frac{A(s, t)}{(\frac{1}{n})\alpha},\text{ если } |s-t| \leqslant \frac{1}{n}\\
+        \frac{A(s, t)}{\big(\frac{1}{n}\big)^\alpha},\text{ если } |s-t| \leqslant \frac{1}{n}\\
     \end{cases}
     $$
     $K_n$ — непрерывные ядра, и соответствующие им операторы $U_n$ будут компактными.
@@ -2622,13 +2622,13 @@ $$
     $$
     $$
     \leqslant
-    2\|x\|\cdot \|A\| \cdot \frac{(\frac{1}{n})^{m-a}}{m-a}\cdot |\Omega|
+    2\|x\|\cdot \|A\| \cdot \frac{\big(\frac{1}{n}\big)^{m-a}}{m-a}\cdot |\Omega|
     $$
     
     Для случая $L^2(\Omega) \to L^2(\Omega)$:
     $$
     \ast \leqslant \int\limits_{B_{\frac{1}{n}}(t)}|K(s, t) - K_n(s, t)||x(s)|\dif s \leqslant
-    2\int\limits_{B_{\frac{1}{n}}(t)} (K(s, t)||x(s)| \dif s \leqslant
+    2\int\limits_{B_{\frac{1}{n}}(t)} |K(s, t)||x(s)| \dif s \leqslant
     $$
     $$
     \leqslant
@@ -2646,16 +2646,17 @@ $$
     $$
     =
     C\Big(\frac{1}{n}\Big)^{m - \alpha}
-    \int\limits_\Omega\int\limits_\Omega \chi_{B_{\frac{1}{n}}(t)}(s)K(s, t) |x(s)|^2 \dif s \dif t
-    = \ldots
+    \int\limits_\Omega\int\limits_\Omega \chi_{B_{\frac{1}{n}}(t)}(s)|K(s, t)| |x(s)|^2 \dif s \dif t
+    =
+    $$
+    $$
+    =
+    C\Big(\frac{1}{n}\Big)^{m - \alpha}
+    \int\limits_\Omega\bigg(
+    \int\limits_{B_{\frac{1}{n}(s)}} |K(s, t)| \dif t\bigg) |x(s)|^2 \dif s \leqslant
+    C\bigg(\Big(\frac{1}{n}\Big)^{m - \alpha}\bigg)^2 \cdot \|x\|^2
     $$
 \end{enumerate}
-
-\subsection{Альтернатива Фредгольма}
-
-Coming soon.
-
-%Далее бумажный конспект%
 
 \subsection{Собственные числа и собственные векторы компактных самосопряжённых операторов}
 
