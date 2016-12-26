@@ -132,7 +132,7 @@
 \begin{definition}
     $\{x_n\} \subset X$ — фундаментальная последовательность (сходящаяся в себе,
     последовательность Коши), если $\|x_n - x_m\| \underto{m,n \to \infty} 0$, то есть
-    $\forall \varepsilon > 0$ $\exists N$: $\forall m,n > N$ $\|x_m - x_m\| < \varepsilon$
+    $\forall \varepsilon > 0$ $\exists N$: $\forall m,n > N$ $\|x_n - x_m\| < \varepsilon$
 \end{definition}
 
 \begin{remark}
@@ -2687,7 +2687,7 @@ $$
         \item $U = U^\ast \implies (Ux, x) \in \real\quad \forall x$, так как
         $(Ux, x) = (x, Ux) = \ol{(Ux, x)}$
         \item $\forall x \in H$ $|(Ux, x)| \leqslant
-        A\|x\|^2 \iff |(U(\frac{x}{\|x\|}, \frac{x}{\|x\|})| \leqslant A$
+        A\|x\|^2 \iff \bigg|\Big(U\big(\frac{x}{\|x\|}\big), \frac{x}{\|x\|}\Big)\bigg| \leqslant A$
         \item Возьмём $x, y \in H$.
         $$
         (U(x+y), x+y) = (Ux, x) + \underbrace{(Ux, y) + (Uy, x)}_{2\Ree (Ux, y)} + (Uy, y)
@@ -2744,7 +2744,7 @@ $$
     $$
     (Ux, e_1) = (x, Ue_1) = \lambda_1(x, e_1) = 0
     $$
-    Пусть $H_1 = \{e_1\}^\perp$. $U(H_1) \subset U_1$ и $U_1 = U|_{H_1}$ — компактный 
+    Пусть $H_1 = \{e_1\}^\perp$. $U(H_1) \subset H_1$ и $U_1 = U|_{H_1}$ — компактный 
     самосопряжённый оператор на $H_1$, у которого существует собственное число
     $\lambda_2$:
     $$
